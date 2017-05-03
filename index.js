@@ -27,10 +27,9 @@ express()
   .post('/', function (req, res) {
     var todo = new Users( req.body );
 
-    let user = req.body.text.split('')
-    // .filter((element) => {
-    //   return element.includes('@')
-    // })
+    let user = req.body.text.split(' ').filter((element) => {
+      return element.includes('@')
+    })
     todo.id = todo._id;
     todo.user = user;
     todo.timestamp = Date.now();
