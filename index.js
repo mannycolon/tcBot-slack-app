@@ -26,8 +26,12 @@ express()
 
   .post('/', function (req, res) {
     var todo = new Users( req.body );
+
+    let user = req.body.text.split('').filter((element) => {
+      return element.includes('@')
+    })
     todo.id = todo._id;
-    todo.user = req.body.text;
+    todo.user = user;
     todo.timestamp = Date.now();
     // http://mongoosejs.com/docs/api.html#model_Model-save
     let data = {
