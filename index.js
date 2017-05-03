@@ -34,7 +34,7 @@ express()
       text: 'How to use /httpstatus command:',
       attachments:[
         {
-          text: todo
+          text: todo.user
         }
       ]
     };
