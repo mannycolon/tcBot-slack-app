@@ -26,15 +26,16 @@ express()
 
   .post('/', function (req, res) {
     var todo = new Users( req.body );
-    todo.id = req.body.text;
-
+    todo.id = todo._id;
+    todo.user = req.body.text;
+    todo.timestamp = Date.now();
     // http://mongoosejs.com/docs/api.html#model_Model-save
     let data = {
       response_type: 'in_channel', // private message (only visible by user).
       text: 'How to use /httpstatus command:',
       attachments:[
         {
-          text: todo.user
+          text: todo.timestamp + " " + todo.user
         }
       ]
     };
