@@ -3,7 +3,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 
-var url = 'mongodb://"heroku_1rfb6cx7:Macp#173@ds129641.mlab.com:29641/heroku_1rfb6cx7'
+var url = 'mongodb://heroku_1rfb6cx7:csft257r52q2mqtq41fdpt2dg6@ds129641.mlab.com:29641/heroku_1rfb6cx7'
 
 // Mongoose Schema definition
 var Schema = new mongoose.Schema({
