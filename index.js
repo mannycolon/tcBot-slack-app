@@ -41,6 +41,7 @@ express()
     todo.save(function (err) {
       res.json(data);
     });
+    console.log(todo)
   })
   // .get('/', (req, res) => {
   //   handleQueries(req.query, res);
