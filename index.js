@@ -30,9 +30,16 @@ express()
     let user = req.body.text.split(' ').filter((element) => {
       return element.includes('@')
     })
+
+    let task = req.body.text.split(' ').filter((element) => {
+      return element.includes('#')
+    })
+
     todo.id = todo._id;
     todo.user = user;
+    todo.task = task;
     todo.timestamp = Date.now();
+    todo.available = false;
     let data = {
       response_type: 'in_channel', // private message (only visible by user).
       text: 'How to use /httpstatus command:',
@@ -42,7 +49,7 @@ express()
         }
       ]
     };
-    todo.insert(function (err) {
+    todo.save(function (err) {
       res.json(data);
     });
     console.log(todo)
