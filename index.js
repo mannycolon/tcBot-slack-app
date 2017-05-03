@@ -9,8 +9,7 @@ var url = 'mongodb://heroku_1rfb6cx7:csft257r52q2mqtq41fdpt2dg6@ds129641.mlab.co
 var Schema = new mongoose.Schema({
   user     : String,
   task     : String,
-  timestamp: String,
-  available: Boolean
+  timestamp: String
 });
 
 var Users = mongoose.model('Users', Schema);
@@ -45,7 +44,7 @@ express()
       text: 'How to use /httpstatus command:',
       attachments:[
         {
-          text: todo.timestamp + " " + todo.user
+          text: todo.user + " was assigned to " + todo.task
         }
       ]
     };
