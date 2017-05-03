@@ -24,14 +24,23 @@ express()
   .use(bodyParser.json()) // support json encoded bodies
   .use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
 
-  .get('/', function (req, res) {
-    var todo = new Users( req.query );
+  .post('/', function (req, res) {
+    var todo = new Users( req.body );
     todo.id = todo._id;
+    todo.user = req.body.text;
     // http://mongoosejs.com/docs/api.html#model_Model-save
+    let data = {
+      response_type: 'in_channel', // private message (only visible by user).
+      text: 'How to use /httpstatus command:',
+      attachments:[
+        {
+          text: todo
+        }
+      ]
+    };
     todo.save(function (err) {
-      res.json(200, todo);
+      res.json(data);
     });
-    console.log(todo)
   })
   // .get('/', (req, res) => {
   //   handleQueries(req.query, res);
