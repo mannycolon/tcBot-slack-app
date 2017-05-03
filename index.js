@@ -3,6 +3,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 
+var url = 'mongodb://<dbuser>:<dbpassword>@ds129641.mlab.com:29641/heroku_1rfb6cx7'
+
 // Mongoose Schema definition
 var Schema = new mongoose.Schema({
   user     : String,
@@ -13,7 +15,7 @@ var Schema = new mongoose.Schema({
 
 var Users = mongoose.model('Users', Schema);
 
-mongoose.connect(process.env.MONGOLAB_URI, function (error) {
+mongoose.connect(url, function (error) {
     if (error) console.error(error);
     else console.log('mongo connected');
 });
