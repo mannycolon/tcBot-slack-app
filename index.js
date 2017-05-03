@@ -33,7 +33,6 @@ express()
     todo.id = todo._id;
     todo.user = user;
     todo.timestamp = Date.now();
-    // http://mongoosejs.com/docs/api.html#model_Model-save
     let data = {
       response_type: 'in_channel', // private message (only visible by user).
       text: 'How to use /httpstatus command:',
@@ -43,7 +42,7 @@ express()
         }
       ]
     };
-    todo.save(function (err) {
+    todo.insert(function (err) {
       res.json(data);
     });
     console.log(todo)
