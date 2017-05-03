@@ -24,7 +24,7 @@ express()
   .use(bodyParser.json()) // support json encoded bodies
   .use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
 
-  .post('/', function (req, res) {
+  .get('/', function (req, res) {
     var todo = new Users( req.body );
     todo.id = todo._id;
     console.log(todo)
