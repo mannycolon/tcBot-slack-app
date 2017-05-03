@@ -25,9 +25,8 @@ express()
   .use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
 
   .get('/', function (req, res) {
-    var todo = new Users( req.body );
+    var todo = new Users( req.query );
     todo.id = todo._id;
-    console.log(todo)
     // http://mongoosejs.com/docs/api.html#model_Model-save
     todo.save(function (err) {
       res.json(200, todo);
