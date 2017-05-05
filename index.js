@@ -45,35 +45,52 @@ express()
     // Set collection
     let collection = db.get('usercollection')
     //finding to see if there is a document in the collection with the userName.
-    let docFound = collection.find({ username: userName}).explain()
-    // .then((n) => {
-    //   console.log(n)
-    // })
-    console.log(docFound)
-    // Submit to the DB
-    collection.insert({
-      "username": userName,
-      "task": task,
-      "timestamp": timestamp,
-      "available": available
-    }, (err, doc) => {
-      if (err) {
-        // If it failed, return error
-        res.json(errorMessage);
+    collection.find({ username: userName})
+    
+    .then((docFound) => {
+      console.log(docFound)
+      if (docFound) {
+        // Submit to the DB
+        collection.insert({
+          "username": userName,
+          "task": task,
+          "timestamp": timestamp,
+          "available": available
+        }, (err, doc) => {
+          if (err) {
+            // If it failed, return error
+            res.json(errorMessage);
+          } else {
+            // set up response message
+            let data = {
+              response_type: 'in_channel', // private message (only visible by user).
+              text: 'Successful pull request assigntment:',
+              attachments:[
+                {
+                  text: "@" + req.body.user_name + " assigned pull request " + task  + " to " + userName 
+                }
+              ]
+            };
+            res.json(data);
+          }
+        })
       } else {
         // set up response message
         let data = {
           response_type: 'in_channel', // private message (only visible by user).
-          text: 'Successful pull request assigntment:',
+          text: 'Unsuccessful pull request assigntment:',
           attachments:[
             {
-              text: "@" + req.body.user_name + " assigned pull request " + task  + " to " + userName 
+              text: userName + " is unavailable"
             }
           ]
         };
         res.json(data);
       }
     })
+
+    
+  
   })
 
   .listen(process.env.PORT || 5000, () => {
