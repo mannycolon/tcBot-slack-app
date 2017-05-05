@@ -64,7 +64,7 @@ express()
               text: 'Successful pull request assigntment:',
               attachments:[
                 {
-                  text: "@" + req.body.user_name + " assigned pull request " + task  + " to " + userName 
+                  text: "@" + req.body.user_name + " assigned pull request " + task + " to " + userName 
                 }
               ]
             };
@@ -78,7 +78,7 @@ express()
           text: 'Unsuccessful pull request assigntment:',
           attachments:[
             {
-              text: "Sorry @" + req.body.user_name + " but " + userName + " is busy with " + docFound[0].task
+              text: "Sorry @" + req.body.user_name + " but " + userName + " is busy with pull request " + docFound[0].task
             }
           ]
         };
