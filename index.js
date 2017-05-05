@@ -45,7 +45,9 @@ express()
     // Set collection
     let collection = db.get('usercollection')
     //finding to see if there is a document in the collection with the userName.
-    let docFound = collection.findOne({ username: userName})
+    let docFound = collection.findOne({ username: userName}).then((n) => {
+      console.log(n)
+    })
     console.log(docFound)
     // Submit to the DB
     collection.insert({
