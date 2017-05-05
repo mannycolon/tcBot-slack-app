@@ -36,7 +36,7 @@ express()
   .post('/', function (req, res) {
     // set internal DB variable
     let db = req.db
-
+    console.log(req.body)
     let userName = textParser(req.body.text, '@');
     let task = textParser(req.body.text, '#');
     let timestamp = Date.now();
