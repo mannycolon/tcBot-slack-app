@@ -78,7 +78,7 @@ express()
           text: 'Unsuccessful pull request assigntment:',
           attachments:[
             {
-              text: userName + " is unavailable"
+              text: "Sorry @" + req.body.user_name + ", " + userName + " is unavailable"
             }
           ]
         };
