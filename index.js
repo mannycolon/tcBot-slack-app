@@ -45,7 +45,7 @@ express()
     // Set collection
     let collection = db.get('usercollection')
     //finding to see if there is a document in the collection with the userName.
-    let docFound = collection.find({username: userName}).limit(1)
+    let docFound = collection.find({username: userName}).limit(1).size()
     console.log(docFound)
     // Submit to the DB
     collection.insert({
