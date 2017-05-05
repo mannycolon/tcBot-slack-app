@@ -47,7 +47,8 @@ express()
     //finding to see if there is a document in the collection with the userName.
     collection.find({ username: userName}).then((docFound) => {
       console.log(docFound)
-      if (docFound) {
+      console.log(docFound.length === 0)
+      if (docFound.length === 0) {
         // Submit to the DB
         collection.insert({
           "username": userName,
