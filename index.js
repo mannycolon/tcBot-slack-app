@@ -36,7 +36,7 @@ express()
   .post('/', function (req, res) {
     // set internal DB variable
     let db = req.db
-    console.log(req.body)
+
     let userName = textParser(req.body.text, '@');
     let task = textParser(req.body.text, '#');
     let timestamp = Date.now();
@@ -62,7 +62,7 @@ express()
           text: 'Successful pull request assigntment:',
           attachments:[
             {
-              text: userName + " was assigned to pull request " + task
+              text: "Hey, @" + req.body.user_name + " " + userName + " was assigned to pull request " + task
             }
           ]
         };
