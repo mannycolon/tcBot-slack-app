@@ -78,7 +78,7 @@ express()
           text: 'Unsuccessful pull request assigntment:',
           attachments:[
             {
-              text: "Sorry @" + req.body.user_name + ", " + userName + " is unavailable"
+              text: "Sorry @" + req.body.user_name + ", " + userName + " is busy with " + docFound.task
             }
           ]
         };
