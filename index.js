@@ -62,7 +62,7 @@ express()
           text: 'Successful pull request assigntment:',
           attachments:[
             {
-              text: "Hey, @" + req.body.user_name + " " + userName + " was assigned to pull request " + task
+              text: "@" + req.body.user_name + " assigned pull request " + task  + " to " + userName 
             }
           ]
         };
