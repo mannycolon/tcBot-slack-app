@@ -9,7 +9,7 @@ const db = monk('mongodb://heroku_1rfb6cx7:csft257r52q2mqtq41fdpt2dg6@ds129641.m
 function textParser(text, identifier) {
   return text.split(' ').filter((element) => {
     return element.includes(identifier)
-  })
+  })[0]
 }
 
 let errorMessage = {
