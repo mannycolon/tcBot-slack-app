@@ -36,6 +36,13 @@ express()
     // set internal DB variable
     let db = req.db
 
+    //opened / closed / reopened / first pr creation/open (req.body.action)
+    // req.body.action
+    // req.body.sender.login
+    // req.body.pull_request.number
+    // req.body.pull_request.url
+    // req.body.pull_request.assignees (array)
+
     // assigned / unassigned (req.body.action)
     // pr requester
     // req.body.sender.login
@@ -48,19 +55,17 @@ express()
     //review_requested (req.body.action)
     // pr requester
     // req.body.sender.login
-    //req.body.requested_reviewer.login
     //req.body.pull_request.number
     //req.body.pull_request.url
+    //req.body.requested_reviewer.login
 
-
-    //opened / closed / reopened (req.body.action)
-    console.log(req.body.action)
-    console.log(req.body.sender.login)
-    console.log(req.body.pull_request.number)
-    console.log(req.body.pull_request.url)
-    
-    console.log(req.body.pull_request.assignees)
-
+    // note: when you first open a pr and dont assignit to anyone then
+    // req.body.action = opened
+    // and req.body.pull_request.assignees = []
+    /****
+     * however when you first open/create a pr and do asign it to someone
+     * then req.body.action = assigned and req.body.pull_request.assignees = ['userobject', 'userobject']
+     */
 
     // https://hooks.slack.com/commands/T0TH52
   })
