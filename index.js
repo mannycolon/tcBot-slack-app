@@ -39,7 +39,7 @@ express()
     //console.log("2 " + req.body.user.login)
     console.log("3 " + req.body.sender.login)
     console.log("4 " + req.body.pull_request.user.login)
-    console.log("5 " + req.body.pull_request.head.repo.assignees_url)
+    console.log("5 " + req.body.issue.assignee)
     
     //console.log("5 " + JSON.stringify(req.body.pull_request.assignee))
     // https://hooks.slack.com/commands/T0TH52
