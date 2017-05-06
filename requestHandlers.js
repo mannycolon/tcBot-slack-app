@@ -7,7 +7,7 @@
  * @param {object} res - response object.
  * @param {object} db - mongodb database access.
  */
-export function handleOpenedPR(req, res, db) {
+module.exports = function handleOpenedPR(req, res, db) {
   console.log(req.body.action)
   console.log(req.body.sender.login)
   console.log(req.body.pull_request.number)
@@ -20,7 +20,7 @@ export function handleOpenedPR(req, res, db) {
  * @param {object} res - response object.
  * @param {object} db - mongodb database access.
  */
-export function handleClosedPR(req, res, db) {
+module.exports = function handleClosedPR(req, res, db) {
   console.log(req.body.action)
   console.log(req.body.sender.login)
   console.log(req.body.pull_request.number)
@@ -33,7 +33,7 @@ export function handleClosedPR(req, res, db) {
  * @param {object} res - response object.
  * @param {object} db - mongodb database access.
  */
-export function handleAssignedPR(req, res, db) {
+module.exports = function handleAssignedPR(req, res, db) {
   console.log(req.body.sender.login)
   console.log(req.body.assignee.login)
   console.log(req.body.pull_request.number)
@@ -45,7 +45,7 @@ export function handleAssignedPR(req, res, db) {
  * @param {object} res - response object.
  * @param {object} db - mongodb database access.
  */
-export function handleUnassignedPR(req, res, db) {
+module.exports = function handleUnassignedPR(req, res, db) {
   console.log(req.body.sender.login)
   console.log(req.body.assignee.login)
   console.log(req.body.pull_request.number)
