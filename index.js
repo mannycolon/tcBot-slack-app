@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const monk = require('monk')
 const db = monk('mongodb://heroku_1rfb6cx7:csft257r52q2mqtq41fdpt2dg6@ds129641.mlab.com:29641/heroku_1rfb6cx7')
 // request handler functions
-import { handleOpenPR, handleAssignPR, handleUnassignPR} from "./requestHandlers"
+const requestHandlers = require('./requestHandlers')
 
 express()
   .use(bodyParser.json()) // support json encoded bodies
@@ -25,19 +25,19 @@ express()
       case "opened":
       case "reopened":
         console.log(req.body.action)
-        handleOpenedPR(req, res, db)
+        requestHandlers.handleOpenedPR(req, res, db)
         break
       case "assigned":
         console.log(req.body.action)
-        handleAssignedPR(req, res, db)
+        requestHandlers.handleAssignedPR(req, res, db)
         break
       case "unassigned":
         console.log(req.body.action)
-        handleUnassignedPR(req, res, db)
+        requestHandlers.handleUnassignedPR(req, res, db)
         break
       case "closed":
         console.log(req.body.action)
-        handleClosedPR(req, res, db)
+        requestHandlers.handleClosedPR(req, res, db)
       default:
         res.send(200, { "Content-Type": "text/plain" });
         // do nothing
