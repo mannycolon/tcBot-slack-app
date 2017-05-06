@@ -7,7 +7,7 @@
  * @param {object} res - response object.
  * @param {object} db - mongodb database access.
  */
-export function handleOpenPR(req, res, db) {
+export function handleOpenedPR(req, res, db) {
   console.log(req.body.action)
   console.log(req.body.sender.login)
   console.log(req.body.pull_request.number)
@@ -20,7 +20,20 @@ export function handleOpenPR(req, res, db) {
  * @param {object} res - response object.
  * @param {object} db - mongodb database access.
  */
-export function handleAssignPR(req, res, db) {
+export function handleClosedPR(req, res, db) {
+  console.log(req.body.action)
+  console.log(req.body.sender.login)
+  console.log(req.body.pull_request.number)
+  console.log(req.body.pull_request.url)
+  console.log(req.body.pull_request.assignees)
+}
+/**
+ * @description
+ * @param {object} req - request object.
+ * @param {object} res - response object.
+ * @param {object} db - mongodb database access.
+ */
+export function handleAssignedPR(req, res, db) {
   console.log(req.body.sender.login)
   console.log(req.body.assignee.login)
   console.log(req.body.pull_request.number)
@@ -32,7 +45,7 @@ export function handleAssignPR(req, res, db) {
  * @param {object} res - response object.
  * @param {object} db - mongodb database access.
  */
-export function handleUnassignPR(req, res, db) {
+export function handleUnassignedPR(req, res, db) {
   console.log(req.body.sender.login)
   console.log(req.body.assignee.login)
   console.log(req.body.pull_request.number)
@@ -62,3 +75,13 @@ export function handleUnassignPR(req, res, db) {
     //req.body.pull_request.number
     //req.body.pull_request.url
     //req.body.requested_reviewer.login
+
+    // merge and closed seem to be the same.
+
+    // note: when you first open a pr and dont assign it to anyone then
+    // req.body.action = opened
+    // and req.body.pull_request.assignees = []
+    /****
+     * however when you first open/create a pr and do asign it to someone
+     * then req.body.action = assigned and req.body.pull_request.assignees = ['userobject', 'userobject']
+     */
