@@ -20,7 +20,7 @@ express()
   .post('/', function (req, res) {
     // set internal DB variable
     let db = req.db
-
+    res.send(200, { "Content-Type": "text/plain" });
     switch (req.body.action) {
       case "opened":
       case "reopened":
@@ -39,6 +39,7 @@ express()
         console.log(req.body.action)
         handleClosedPR(req, res, db)
       default:
+        res.send(200, { "Content-Type": "text/plain" });
         // do nothing
         break
     }
