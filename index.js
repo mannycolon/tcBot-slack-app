@@ -35,11 +35,14 @@ express()
   .post('/', function (req, res) {
     // set internal DB variable
     let db = req.db
-    console.log("1 " + req.body.action)
-    // console.log("2 " + req.body.sender.login)
-    // console.log(req.body.assignee.login)
+    console.log(req.body.action)
+    // pr requester
+    console.log(req.body.sender.login)
+    // reviewer assignee
+    console.log(req.body.assignee.login)
     console.log(req.body.pull_request.number)
     console.log(req.body.pull_request.url)
+    console.log(req.body.requested_reviewer)
     // https://hooks.slack.com/commands/T0TH52
   })
 
