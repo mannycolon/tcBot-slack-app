@@ -36,9 +36,8 @@ express()
     // set internal DB variable
     let db = req.db
     console.log("1 " + req.body.action)
-    console.log("2 " + req.body.user.login)
-    console.log("3 " + req.body.sender.login)
-    console.log("4 " + req.body.pull_request.user.login)
+    console.log("2 " + req.body.sender.login)
+    console.log("3 " + req.body.pull_request.user.login)
     console.log(req.body.assignee.login)
     
     //console.log("5 " + JSON.stringify(req.body.pull_request.assignee))
