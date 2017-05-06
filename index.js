@@ -59,8 +59,8 @@ express()
     //console.log(req.body.requested_reviewer.login)
     console.log(req.body.pull_request.number)
     console.log(req.body.pull_request.url)
-    console.log(req.body.assignee.login)
-
+    //console.log(req.body.assignee.login)
+    console.log(pull_request.base.user.login)
 
 
     // https://hooks.slack.com/commands/T0TH52
