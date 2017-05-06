@@ -35,7 +35,9 @@ express()
   .post('/', function (req, res) {
     // set internal DB variable
     let db = req.db
-    console.log(req.body)
+    console.log(req.body.action)
+
+    // https://hooks.slack.com/commands/T0TH52
   })
 
   .listen(process.env.PORT || 5000, () => {
