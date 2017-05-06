@@ -59,7 +59,7 @@ express()
     console.log(req.body.pull_request.number)
     console.log(req.body.pull_request.url)
     
-    console.log(req.body.pull_request.assignee)
+    console.log(req.body.pull_request.assignees)
 
 
     // https://hooks.slack.com/commands/T0TH52
