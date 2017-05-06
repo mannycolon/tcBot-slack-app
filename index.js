@@ -4,7 +4,6 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const monk = require('monk')
 const db = monk('mongodb://heroku_1rfb6cx7:csft257r52q2mqtq41fdpt2dg6@ds129641.mlab.com:29641/heroku_1rfb6cx7')
-//let url = 'mongodb://heroku_1rfb6cx7:csft257r52q2mqtq41fdpt2dg6@ds129641.mlab.com:29641/heroku_1rfb6cx7'
 
 function textParser(text, identifier) {
   return text.split(' ').filter((element) => {
@@ -36,58 +35,7 @@ express()
   .post('/', function (req, res) {
     // set internal DB variable
     let db = req.db
-
-    let userName = textParser(req.body.text, '@');
-    let task = textParser(req.body.text, '#');
-    let timestamp = Date.now();
-    let available = false;
-
-    // Set collection
-    let collection = db.get('usercollection')
-    //finding to see if there is a document in the collection with the userName.
-    collection.find({ username: userName}).then((docFound) => {
-      if (docFound.length === 0) {
-        // Submit to the DB
-        collection.insert({
-          "username": userName,
-          "task": task,
-          "timestamp": timestamp,
-          "available": available
-        }, (err, doc) => {
-          if (err) {
-            // If it failed, return error
-            res.json(errorMessage);
-          } else {
-            // set up response message
-            let data = {
-              response_type: 'in_channel', // private message (only visible by user).
-              text: 'Successful pull request assigntment:',
-              attachments:[
-                {
-                  text: "@" + req.body.user_name + " assigned pull request " + task + " to " + userName 
-                }
-              ]
-            };
-            res.json(data);
-          }
-        })
-      } else {
-        // set up response message
-        let data = {
-          response_type: 'in_channel', // private message (only visible by user).
-          text: 'Unsuccessful pull request assigntment:',
-          attachments:[
-            {
-              text: "Sorry @" + req.body.user_name + " but " + userName + " is busy with pull request " + docFound[0].task
-            }
-          ]
-        };
-        res.json(data);
-      }
-    })
-
-    
-  
+    console.log(req.body)
   })
 
   .listen(process.env.PORT || 5000, () => {
