@@ -39,10 +39,11 @@ express()
     // pr requester
     console.log(req.body.sender.login)
     // reviewer assignee
-    console.log(req.body.assignee.login)
+    // console.log(req.body.assignee.login)
+    console.log(req.body.requested_reviewer)
     console.log(req.body.pull_request.number)
     console.log(req.body.pull_request.url)
-    console.log(req.body.requested_reviewer)
+    
     // https://hooks.slack.com/commands/T0TH52
   })
 
