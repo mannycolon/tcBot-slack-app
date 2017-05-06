@@ -38,7 +38,8 @@ express()
     console.log("1 " + req.body.action)
     //console.log("2 " + req.body.user.login)
     console.log("3 " + req.body.sender.login)
-    console.log("4 " + req.body.body)
+    console.log("4 " + req.body.pull_request.user.login)
+    console.log("5 " + req.body.pull_request.user.type)
     // https://hooks.slack.com/commands/T0TH52
   })
 
