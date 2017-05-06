@@ -7,23 +7,6 @@ const db = monk('mongodb://heroku_1rfb6cx7:csft257r52q2mqtq41fdpt2dg6@ds129641.m
 // request handler functions
 import { handleOpenPR, handleAssignPR, handleUnassignPR} from "./requestHandlers"
 
-function textParser(text, identifier) {
-  return text.split(' ').filter((element) => {
-    return element.includes(identifier)
-  })[0]
-}
-
-let errorMessage = {
-  response_type: 'ephemeral', // private message (only visible by user).
-  text: 'Error: ',
-  attachments:[
-    {
-      text: "There was a problem adding the information to the database."
-    }
-  ]
-};
-
-
 express()
   .use(bodyParser.json()) // support json encoded bodies
   .use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
@@ -59,8 +42,6 @@ express()
         // do nothing
         break
     }
-
-    // https://hooks.slack.com/commands/T0TH52
   })
 
   .listen(process.env.PORT || 5000, () => {
