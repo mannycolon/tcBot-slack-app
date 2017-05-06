@@ -36,11 +36,10 @@ express()
     // set internal DB variable
     let db = req.db
     console.log("1 " + req.body.action)
-    console.log("2 " + req.body.sender.login)
-    console.log("3 " + req.body.pull_request.user.login)
-    console.log(req.body.assignee.login)
-    
-    //console.log("5 " + JSON.stringify(req.body.pull_request.assignee))
+    // console.log("2 " + req.body.sender.login)
+    // console.log(req.body.assignee.login)
+    console.log(req.body.pull_request.number)
+    console.log(req.body.issue)
     // https://hooks.slack.com/commands/T0TH52
   })
 
