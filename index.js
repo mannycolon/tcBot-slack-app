@@ -24,23 +24,18 @@ express()
     switch (req.body.action) {
       case "opened":
       case "reopened":
-        console.log(req.body.action)
         requestHandlers.handleOpenedPR(req, res, db)
         break
       case "assigned":
-        console.log(req.body.action)
         requestHandlers.handleAssignedPR(req, res, db)
         break
       case "unassigned":
-        console.log(req.body.action)
         requestHandlers.handleUnassignedPR(req, res, db)
         break
       case "closed":
-        console.log(req.body.action)
         requestHandlers.handleClosedPR(req, res, db)
       default:
-        res.send(200, { "Content-Type": "text/plain" });
-        // do nothing
+        // Do nothing
         break
     }
   })
