@@ -35,15 +35,34 @@ express()
   .post('/', function (req, res) {
     // set internal DB variable
     let db = req.db
-    console.log(req.body.action)
+
+    // assigned / unassigned (req.body.action)
     // pr requester
-    console.log(req.body.sender.login)
+    // req.body.sender.login
     // reviewer assignee
-    // console.log(req.body.assignee.login)
-    console.log(req.body.requested_reviewer)
+    // req.body.assignee.login
+    // req.body.pull_request.number
+    // req.body.pull_request.url
+    
+    //review_request_removed (req.body.action)
+    //review_requested (req.body.action)
+    // pr requester
+    // req.body.sender.login
+    //req.body.requested_reviewer.login
+    //req.body.pull_request.number
+    //req.body.pull_request.url
+
+
+    //opened / closed / reopened (req.body.action)
+    console.log(req.body.action)
+    console.log(req.body.sender.login)
+    console.log(req.body.requested_reviewer.login)
     console.log(req.body.pull_request.number)
     console.log(req.body.pull_request.url)
-    
+    console.log(req.body.assignee.login)
+
+
+
     // https://hooks.slack.com/commands/T0TH52
   })
 
