@@ -99,7 +99,7 @@ function handleTaskRemoval(req, res, db) {
     let userName = assignee.login;
     //finding to see if there is a document in the collection with the userName.
     collection.find({ username: userName}).then((docFound) => {
-      if (docFound.length === 0) {
+      if (docFound) {
         // Submit to the DB
         collection.remove({
           username: userName,
@@ -149,7 +149,7 @@ function handleTaskRemoval(req, res, db) {
           }
         })
       } else {
-        console.log(docFound)
+        console.log("No document collection was found in the database.")
       }
     })
   }, this);
