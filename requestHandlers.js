@@ -119,28 +119,12 @@ function handleTaskRemoval(req, res, db) {
               text: "Successful Pull Request Unassignment:",
               attachments: [
                 {
-                  text: "@" + originator + " created a new pull request.",
-                  color: "#36a64f",
+                  text: "@" + originator + " *merged* pull request" + "#" + taskNumber
+                  + "@" + userName + " was unassigned from #" + taskNumber,
+                  mrkdwn_in: ["text", "pretext"],
+                  color: "#439fe0",
                   title: repoName,
-                  title_link: taskURL,
-                  fields: [
-                    {
-                      title: "Assigned to",
-                      value: "@" + userName,
-                      short: true
-                    },
-                    {
-                      title: "Pull Request Number",
-                      value: "#" + taskNumber,
-                      short: true
-                    },
-                    {
-                      title: "Pull Request URL",
-                      value: taskURL + "\n\n\n <https://reviewable.io/reviews/"
-                             + fullRepoName + "/" + taskNumber + "|Review Now>",
-                      short: false
-                    }
-                  ]
+                  title_link: taskURL
                 }
               ]
             });
