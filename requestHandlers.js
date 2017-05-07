@@ -98,19 +98,6 @@ function handleClosedPR(req, res, db) {
  * @param {object} res - response object.
  * @param {object} db - mongodb database access.
  */
-function handleAssignedPR(req, res, db) {
-  console.log(req.body.sender.login)
-  console.log(req.body.assignee.login)
-  console.log(req.body.pull_request.number)
-  console.log(req.body.pull_request.html_url)
-  console.log(req.bodypull_request.head.repo.name)
-}
-/**
- * @description
- * @param {object} req - request object.
- * @param {object} res - response object.
- * @param {object} db - mongodb database access.
- */
 function handleUnassignedPR(req, res, db) {
   console.log(req.body.sender.login)
   console.log(req.body.assignee.login)
