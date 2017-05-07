@@ -10,7 +10,7 @@ const slack = require('slack-notify')(MY_SLACK_WEBHOOK_URL);
  */
 function handleOpenedPR(req, res, db) {
   let assigner = req.body.sender.login
-  let task = req.body.pull_request.url
+  let taskURL = req.body.pull_request.url
   let taskNumber = req.body.pull_request.number
   let timestamp = Date.now()
   let assignees = req.body.pull_request.assignees
@@ -26,8 +26,12 @@ function handleOpenedPR(req, res, db) {
         // Submit to the DB
         collection.insert({
           "username": userName,
-          "task": task,
-          "taskNumber": taskNumber,
+          "task": [
+            {
+              "taskURL": taskURL,
+              "taskNumber": taskNumber
+            }
+          ],
           "timestamp": timestamp
         }, (err, doc) => {
           if (err) {
@@ -39,7 +43,7 @@ function handleOpenedPR(req, res, db) {
               text: 'Successful pull request assigntment:',
               attachments: [
                 {
-                  text: "@" + assigner + " assigned pull request " + task + " to " + userName
+                  text: "@" + assigner + " assigned pull request " + task + " to @" + userName
                 }
               ]
             });
