@@ -41,11 +41,29 @@ function handleOpenedPR(req, res, db) {
           } else {
             // sending slack notification
             slack.alert({
-              text: 'Successful Pull Request Assignment:',
+              text: "Successful Pull Request Assignment:",
               attachments: [
                 {
-                  text: "@" + originator + " assigned pull request #" + taskNumber
-                  + " to @" + userName + " in the " + repoName + "\n" + taskURL
+                  text: "@" + originator + " created a new pull request.",
+                  color: "#36a64f",
+                  title: repoName,
+                  fields: [
+                    {
+                      title: "Assigned to",
+                      value: userName,
+                      short: true
+                    },
+                    {
+                      title: "Pull Request Number",
+                      value: "#" + taskNumber,
+                      short: true
+                    },
+                    {
+                      title: "Pull Request URL",
+                      value: taskURL,
+                      short: false
+                    }
+                  ]
                 }
               ]
             });
