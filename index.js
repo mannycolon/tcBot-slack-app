@@ -24,8 +24,6 @@ express()
     switch (req.body.action) {
       case "opened":
       case "reopened":
-        requestHandlers.handleOpenedPR(req, res, db)
-        break
       case "assigned":
         requestHandlers.handleOpenedPR(req, res, db)
         break
