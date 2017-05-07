@@ -13,6 +13,7 @@
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "mongoose": "^4.9.7",
-    "monk": "^4.0.0"
+    "monk": "^4.0.0",
+    "slack-notify": "^0.1.6"
   }
 }
