@@ -109,7 +109,6 @@ function handleUnassignedPR(req, res, db) {
 module.exports = {
   handleOpenedPR,
   handleClosedPR,
-  handleAssignedPR,
   handleUnassignedPR
 }
 
