@@ -65,7 +65,6 @@ function handleOpenedPR(req, res, db) {
                       value: taskURL + "\n\n\n <https://reviewable.io/reviews/"
                              + fullRepoName + "/" + taskNumber + "|Review Now>",
                       short: false
-                      full_name
                     }
                   ]
                 }
