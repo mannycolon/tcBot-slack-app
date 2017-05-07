@@ -45,7 +45,7 @@ function handleTaskAssignment(req, res, db) {
               text: "Successful Pull Request Assignment:",
               attachments: [
                 {
-                  text: "@" + originator + " created a new pull request.",
+                  text: "@" + originator + " created a new *Pull Request.*",
                   color: "#36a64f",
                   title: repoName,
                   title_link: taskURL,
@@ -119,8 +119,8 @@ function handleTaskRemoval(req, res, db) {
               text: "Successful Pull Request Unassignment:",
               attachments: [
                 {
-                  text: "@" + originator + " *merged* pull request" + "#" + taskNumber
-                  + "@" + userName + " was unassigned from #" + taskNumber,
+                  text: "@" + originator + " *merged* pull request #" + taskNumber
+                  + "\n@" + userName + " was *unassigned* from #" + taskNumber,
                   mrkdwn_in: ["text", "pretext"],
                   color: "#439fe0",
                   title: repoName,
