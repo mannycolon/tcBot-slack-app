@@ -8,7 +8,7 @@ const slack = require('slack-notify')(MY_SLACK_WEBHOOK_URL);
  * @param {object} res - response object.
  * @param {object} db - mongodb database access.
  */
-function handleOpenedPR(req, res, db) {
+function handleTaskAssignment(req, res, db) {
   let originator = req.body.sender.login
   let taskURL = req.body.pull_request.html_url
   let taskNumber = req.body.pull_request.number
@@ -84,7 +84,7 @@ function handleOpenedPR(req, res, db) {
  * @param {object} res - response object.
  * @param {object} db - mongodb database access.
  */
-function handleClosedPR(req, res, db) {
+function handleTaskRemoval(req, res, db) {
   console.log(req.body.action)
   console.log(req.body.sender.login)
   console.log(req.body.pull_request.number)
@@ -92,24 +92,10 @@ function handleClosedPR(req, res, db) {
   console.log(req.body.pull_request.assignees)
   console.log(req.bodypull_request.head.repo.name)
 }
-/**
- * @description
- * @param {object} req - request object.
- * @param {object} res - response object.
- * @param {object} db - mongodb database access.
- */
-function handleUnassignedPR(req, res, db) {
-  console.log(req.body.sender.login)
-  console.log(req.body.assignee.login)
-  console.log(req.body.pull_request.number)
-  console.log(req.body.pull_request.html_url)
-  console.log(req.bodypull_request.head.repo.name)
-}
 
 module.exports = {
-  handleOpenedPR,
-  handleClosedPR,
-  handleUnassignedPR
+  handleTaskAssignment,
+  handleTaskRemoval,
 }
 
 //opened / closed / reopened / first pr creation/open (req.body.action)
