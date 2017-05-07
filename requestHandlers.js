@@ -46,6 +46,7 @@ function handleTaskAssignment(req, res, db) {
               attachments: [
                 {
                   text: "@" + originator + " created a new *Pull Request.*",
+                  mrkdwn_in: ["text", "pretext"],
                   color: "#36a64f",
                   title: repoName,
                   title_link: taskURL,
