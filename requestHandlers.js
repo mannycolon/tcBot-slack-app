@@ -9,7 +9,7 @@ const slack = require('slack-notify')(MY_SLACK_WEBHOOK_URL);
  * @param {object} db - mongodb database access.
  */
 function handleOpenedPR(req, res, db) {
-  let assigner = req.body.sender.login
+  let originator = req.body.sender.login
   let taskURL = req.body.pull_request.url
   let taskNumber = req.body.pull_request.number
   let timestamp = Date.now()
@@ -40,10 +40,11 @@ function handleOpenedPR(req, res, db) {
           } else {
             // sending slack notification
             slack.alert({
-              text: 'Successful pull request assigntment:',
+              text: 'Successful Pull Request Assignment:',
               attachments: [
                 {
-                  text: "@" + assigner + " assigned pull request " + taskURL + " to @" + userName
+                  text: "@" + originator + " assigned pull request #" + taskNumber + "\n"
+                  + " to @" + userName + "\n" + taskURL
                 }
               ]
             });
