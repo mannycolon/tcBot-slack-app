@@ -27,7 +27,7 @@ express()
         requestHandlers.handleOpenedPR(req, res, db)
         break
       case "assigned":
-        requestHandlers.handleAssignedPR(req, res, db)
+        requestHandlers.handleOpenedPR(req, res, db)
         break
       case "unassigned":
         requestHandlers.handleUnassignedPR(req, res, db)
