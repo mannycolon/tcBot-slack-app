@@ -15,6 +15,7 @@ function handleOpenedPR(req, res, db) {
   let timestamp = Date.now()
   let assignees = req.body.pull_request.assignees
   let repoName = req.body.pull_request.head.repo.name
+  let fullRepoName = req.body.pull_request.head.repo.full_name // ex. translationCoreApps/translationHelps
   // Set collection
   let collection = db.get('usercollection')
 
@@ -47,6 +48,7 @@ function handleOpenedPR(req, res, db) {
                   text: "@" + originator + " created a new pull request.",
                   color: "#36a64f",
                   title: repoName,
+                  title_link: taskURL,
                   fields: [
                     {
                       title: "Assigned to",
@@ -60,8 +62,10 @@ function handleOpenedPR(req, res, db) {
                     },
                     {
                       title: "Pull Request URL",
-                      value: taskURL,
+                      value: taskURL + "\n\n\n <https://reviewable.io/reviews/"
+                             + fullRepoName + "/" + taskNumber + "|Review Now>",
                       short: false
+                      full_name
                     }
                   ]
                 }
@@ -158,3 +162,4 @@ module.exports = {
 
 
     // pull_request.head.repo.name
+    //https://reviewable.io/reviews/translationcoreapps/translationhelps/30
