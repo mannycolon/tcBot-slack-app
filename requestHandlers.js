@@ -50,7 +50,7 @@ function handleOpenedPR(req, res, db) {
                   fields: [
                     {
                       title: "Assigned to",
-                      value: userName,
+                      value: "@" + userName,
                       short: true
                     },
                     {
