@@ -19,11 +19,13 @@ function handleTaskAssignment(req, res, db) {
   // Set collection
   let collection = db.get('usercollection')
 
-  let userName = ""
+  let userName = "@"
 
   assignees.forEach(function(assignee) {
-    userName += assignee.login;
-    //finding to see if there is a document in the collection with the userName.
+    userName += assignee.login + "\n @";
+  }, this);
+
+  //finding to see if there is a document in the collection with the userName.
     collection.find({ username: userName}).then((docFound) => {
       if (docFound.length === 0) {
         // Submit to the DB
@@ -54,7 +56,7 @@ function handleTaskAssignment(req, res, db) {
                   fields: [
                     {
                       title: "Assigned to",
-                      value: "@" + userName,
+                      value: userName,
                       short: true
                     },
                     {
@@ -78,7 +80,6 @@ function handleTaskAssignment(req, res, db) {
         console.log(docFound)
       }
     })
-  }, this);
 }
 /**
  * @description
