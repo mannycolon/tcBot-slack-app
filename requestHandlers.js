@@ -1,4 +1,5 @@
- 
+const MY_SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/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';
+const slack = require('slack-notify')(MY_SLACK_WEBHOOK_URL);
 // request handler functions
 
 /**
@@ -8,11 +9,47 @@
  * @param {object} db - mongodb database access.
  */
 function handleOpenedPR(req, res, db) {
-  console.log(req.body.action)
-  console.log(req.body.sender.login)
-  console.log(req.body.pull_request.number)
-  console.log(req.body.pull_request.url)
-  console.log(req.body.pull_request.assignees)
+  let assigner = req.body.sender.login
+  let task = req.body.pull_request.url
+  let taskNumber = req.body.pull_request.number
+  let timestamp = Date.now()
+  let assignees = req.body.pull_request.assignees
+
+  // Set collection
+  let collection = db.get('usercollection')
+
+  assignees.forEach(function(assignee) {
+    let userName = assignee.login;
+    //finding to see if there is a document in the collection with the userName.
+    collection.find({ username: userName}).then((docFound) => {
+      if (docFound.length === 0) {
+        // Submit to the DB
+        collection.insert({
+          "username": userName,
+          "task": task,
+          "taskNumber": taskNumber,
+          "timestamp": timestamp
+        }, (err, doc) => {
+          if (err) {
+            // If it failed, return error
+            console.log(err);
+          } else {
+            // sending slack notification
+            slack.alert({
+              text: 'Successful pull request assigntment:',
+              attachments: [
+                {
+                  text: "@" + assigner + " assigned pull request " + task + " to " + userName
+                }
+              ]
+            });
+          }
+        })
+      } else {
+        console.log(docFound)
+      }
+    })
+  }, this);
 }
 /**
  * @description
