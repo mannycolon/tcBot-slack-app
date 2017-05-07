@@ -10,7 +10,7 @@ const slack = require('slack-notify')(MY_SLACK_WEBHOOK_URL);
  */
 function handleOpenedPR(req, res, db) {
   let originator = req.body.sender.login
-  let taskURL = req.body.pull_request.url
+  let taskURL = req.body.pull_request.html_url
   let taskNumber = req.body.pull_request.number
   let timestamp = Date.now()
   let assignees = req.body.pull_request.assignees
@@ -85,7 +85,7 @@ function handleClosedPR(req, res, db) {
   console.log(req.body.action)
   console.log(req.body.sender.login)
   console.log(req.body.pull_request.number)
-  console.log(req.body.pull_request.url)
+  console.log(req.body.pull_request.html_url)
   console.log(req.body.pull_request.assignees)
   console.log(req.bodypull_request.head.repo.name)
 }
@@ -99,7 +99,7 @@ function handleAssignedPR(req, res, db) {
   console.log(req.body.sender.login)
   console.log(req.body.assignee.login)
   console.log(req.body.pull_request.number)
-  console.log(req.body.pull_request.url)
+  console.log(req.body.pull_request.html_url)
   console.log(req.bodypull_request.head.repo.name)
 }
 /**
@@ -112,7 +112,7 @@ function handleUnassignedPR(req, res, db) {
   console.log(req.body.sender.login)
   console.log(req.body.assignee.login)
   console.log(req.body.pull_request.number)
-  console.log(req.body.pull_request.url)
+  console.log(req.body.pull_request.html_url)
   console.log(req.bodypull_request.head.repo.name)
 }
 
@@ -127,7 +127,7 @@ module.exports = {
     // req.body.action
     // req.body.sender.login
     // req.body.pull_request.number)
-    // req.body.pull_request.url
+    // req.body.pull_request.html_url
     // req.body.pull_request.assignees (array)
 
     // assigned / unassigned (req.body.action)
@@ -136,14 +136,14 @@ module.exports = {
     // reviewer assignee
     // req.body.assignee.login
     // req.body.pull_request.number
-    // req.body.pull_request.url
+    // req.body.pull_request.html_url
     
     //review_request_removed (req.body.action)
     //review_requested (req.body.action)
     // pr requester
     // req.body.sender.login
     //req.body.pull_request.number
-    //req.body.pull_request.url
+    //req.body.pull_request.html_url
     //req.body.requested_reviewer.login
 
     // merge and closed seem to be the same.
