@@ -1,5 +1,6 @@
 const MY_SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/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';
 const slack = require('slack-notify')(MY_SLACK_WEBHOOK_URL);
+const userHandles = require('./userHandles')
 // request handler functions
 
 /**
@@ -9,7 +10,7 @@ const slack = require('slack-notify')(MY_SLACK_WEBHOOK_URL);
  * @param {object} db - mongodb database access.
  */
 function handleTaskAssignment(req, res, db) {
-  let originator = req.body.sender.login
+  let originator = userHandles[req.body.sender.login]
   let taskURL = req.body.pull_request.html_url
   let taskNumber = req.body.pull_request.number
   let timestamp = Date.now()
@@ -20,7 +21,7 @@ function handleTaskAssignment(req, res, db) {
   let collection = db.get('usercollection')
 
   assignees.forEach(function(assignee) {
-    let userName = assignee.login;
+    let userName = userHandles[assignee.login]
     //finding to see if there is a document in the collection with the userName.
     collection.find({ username: userName}).then((docFound) => {
       if (docFound.length === 0) {
@@ -45,7 +46,7 @@ function handleTaskAssignment(req, res, db) {
               text: "Successful Pull Request Assignment:",
               attachments: [
                 {
-                  text: "@" + originator + " created a new *Pull Request.*",
+                  text: originator + " created a new *Pull Request.*",
                   mrkdwn_in: ["text", "pretext"],
                   color: "#36a64f",
                   title: repoName,
@@ -53,7 +54,7 @@ function handleTaskAssignment(req, res, db) {
                   fields: [
                     {
                       title: "Assigned to",
-                      value: "@" + userName,
+                      value: userName,
                       short: true
                     },
                     {
@@ -86,7 +87,7 @@ function handleTaskAssignment(req, res, db) {
  * @param {object} db - mongodb database access.
  */
 function handleTaskRemoval(req, res, db) {
-  let originator = req.body.sender.login
+  let originator = userHandles[req.body.sender.login]
   let taskURL = req.body.pull_request.html_url
   let taskNumber = req.body.pull_request.number
   let assignees = req.body.pull_request.assignees
@@ -96,7 +97,7 @@ function handleTaskRemoval(req, res, db) {
   let collection = db.get('usercollection')
 
   assignees.forEach(function(assignee) {
-    let userName = assignee.login;
+    let userName = userHandles[assignee.login];
     //finding to see if there is a document in the collection with the userName.
     collection.find({ username: userName}).then((docFound) => {
       if (docFound) {
@@ -120,8 +121,8 @@ function handleTaskRemoval(req, res, db) {
               text: "Successful Pull Request Unassignment:",
               attachments: [
                 {
-                  text: "@" + originator + " *merged* pull request #" + taskNumber
-                  + "\n@" + userName + " was *unassigned* from PR #" + taskNumber,
+                  text: originator + " *merged* pull request #" + taskNumber
+                  + "\n" + userName + " was *unassigned* from PR #" + taskNumber,
                   mrkdwn_in: ["text", "pretext"],
                   color: "#439fe0",
                   title: repoName,
