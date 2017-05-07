@@ -19,8 +19,10 @@ function handleTaskAssignment(req, res, db) {
   // Set collection
   let collection = db.get('usercollection')
 
+  let userName = ""
+
   assignees.forEach(function(assignee) {
-    let userName = assignee.login;
+    userName += assignee.login;
     //finding to see if there is a document in the collection with the userName.
     collection.find({ username: userName}).then((docFound) => {
       if (docFound.length === 0) {
