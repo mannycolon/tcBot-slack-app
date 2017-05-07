@@ -43,7 +43,7 @@ function handleOpenedPR(req, res, db) {
               text: 'Successful pull request assigntment:',
               attachments: [
                 {
-                  text: "@" + assigner + " assigned pull request " + task + " to @" + userName
+                  text: "@" + assigner + " assigned pull request " + taskURL + " to @" + userName
                 }
               ]
             });
