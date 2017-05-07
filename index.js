@@ -25,13 +25,11 @@ express()
       case "opened":
       case "reopened":
       case "assigned":
-        requestHandlers.handleOpenedPR(req, res, db)
+        requestHandlers.handleTaskAssignment(req, res, db)
         break
       case "unassigned":
-        requestHandlers.handleUnassignedPR(req, res, db)
-        break
       case "closed":
-        requestHandlers.handleClosedPR(req, res, db)
+        requestHandlers.handleTaskRemoval(req, res, db)
       default:
         // Do nothing
         break
