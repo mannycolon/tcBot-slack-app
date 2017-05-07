@@ -85,12 +85,74 @@ function handleTaskAssignment(req, res, db) {
  * @param {object} db - mongodb database access.
  */
 function handleTaskRemoval(req, res, db) {
-  console.log(req.body.action)
-  console.log(req.body.sender.login)
-  console.log(req.body.pull_request.number)
-  console.log(req.body.pull_request.html_url)
-  console.log(req.body.pull_request.assignees)
-  console.log(req.bodypull_request.head.repo.name)
+  let originator = req.body.sender.login
+  let taskURL = req.body.pull_request.html_url
+  let taskNumber = req.body.pull_request.number
+  let timestamp = Date.now()
+  let assignees = req.body.pull_request.assignees
+  let repoName = req.body.pull_request.head.repo.name
+  let fullRepoName = req.body.pull_request.head.repo.full_name // ex. translationCoreApps/translationHelps
+  // Set collection
+  let collection = db.get('usercollection')
+
+  assignees.forEach(function(assignee) {
+    let userName = assignee.login;
+    //finding to see if there is a document in the collection with the userName.
+    collection.find({ username: userName}).then((docFound) => {
+      if (docFound.length === 0) {
+        // Submit to the DB
+        collection.remove({
+          username: userName,
+          task: [
+            {
+              taskURL: taskURL,
+              taskNumber: taskNumber,
+              repoName: repoName
+            }
+          ],
+          timestamp: timestamp
+        }, (err, doc) => {
+          if (err) {
+            // If it failed, return error
+            console.log(err);
+          } else {
+            // sending slack notification
+            slack.alert({
+              text: "Successful Pull Request Unassignment:",
+              attachments: [
+                {
+                  text: "@" + originator + " created a new pull request.",
+                  color: "#36a64f",
+                  title: repoName,
+                  title_link: taskURL,
+                  fields: [
+                    {
+                      title: "Assigned to",
+                      value: "@" + userName,
+                      short: true
+                    },
+                    {
+                      title: "Pull Request Number",
+                      value: "#" + taskNumber,
+                      short: true
+                    },
+                    {
+                      title: "Pull Request URL",
+                      value: taskURL + "\n\n\n <https://reviewable.io/reviews/"
+                             + fullRepoName + "/" + taskNumber + "|Review Now>",
+                      short: false
+                    }
+                  ]
+                }
+              ]
+            });
+          }
+        })
+      } else {
+        console.log(docFound)
+      }
+    })
+  }, this);
 }
 
 module.exports = {
