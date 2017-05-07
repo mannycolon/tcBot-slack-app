@@ -121,7 +121,7 @@ function handleTaskRemoval(req, res, db) {
               attachments: [
                 {
                   text: "@" + originator + " *merged* pull request #" + taskNumber
-                  + "\n@" + userName + " was *unassigned* from #" + taskNumber,
+                  + "\n@" + userName + " was *unassigned* from PR #" + taskNumber,
                   mrkdwn_in: ["text", "pretext"],
                   color: "#439fe0",
                   title: repoName,
