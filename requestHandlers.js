@@ -14,7 +14,7 @@ function handleOpenedPR(req, res, db) {
   let taskNumber = req.body.pull_request.number
   let timestamp = Date.now()
   let assignees = req.body.pull_request.assignees
-
+  let repoName = req.body.pull_request.head.repo.name
   // Set collection
   let collection = db.get('usercollection')
 
@@ -29,7 +29,8 @@ function handleOpenedPR(req, res, db) {
           "task": [
             {
               "taskURL": taskURL,
-              "taskNumber": taskNumber
+              "taskNumber": taskNumber,
+              "repoName": repoName
             }
           ],
           "timestamp": timestamp
@@ -44,7 +45,7 @@ function handleOpenedPR(req, res, db) {
               attachments: [
                 {
                   text: "@" + originator + " assigned pull request #" + taskNumber
-                  + " to @" + userName + "\n" + taskURL
+                  + " to @" + userName + " in the " + repoName + "\n" + taskURL
                 }
               ]
             });
@@ -68,6 +69,7 @@ function handleClosedPR(req, res, db) {
   console.log(req.body.pull_request.number)
   console.log(req.body.pull_request.url)
   console.log(req.body.pull_request.assignees)
+  console.log(req.bodypull_request.head.repo.name)
 }
 /**
  * @description
@@ -80,6 +82,7 @@ function handleAssignedPR(req, res, db) {
   console.log(req.body.assignee.login)
   console.log(req.body.pull_request.number)
   console.log(req.body.pull_request.url)
+  console.log(req.bodypull_request.head.repo.name)
 }
 /**
  * @description
@@ -92,6 +95,7 @@ function handleUnassignedPR(req, res, db) {
   console.log(req.body.assignee.login)
   console.log(req.body.pull_request.number)
   console.log(req.body.pull_request.url)
+  console.log(req.bodypull_request.head.repo.name)
 }
 
 module.exports = {
@@ -133,3 +137,6 @@ module.exports = {
      * however when you first open/create a pr and do asign it to someone
      * then req.body.action = assigned and req.body.pull_request.assignees = ['userobject', 'userobject']
      */
+
+
+    // pull_request.head.repo.name
