@@ -110,7 +110,6 @@ function handleTaskRemoval(req, res, db) {
               repoName: repoName
             }
           ],
-          timestamp: timestamp
         }, (err, doc) => {
           if (err) {
             // If it failed, return error
