@@ -20,7 +20,7 @@ express()
   .post('/', function (req, res) {
     // set internal DB variable
     let db = req.db
-    res.status(200).send({ "Content-Type": "text/plain" });
+    res.status(200).send({ "Content-Type": "application/json" });
     switch (req.body.action) {
       case "opened":
       case "reopened":
