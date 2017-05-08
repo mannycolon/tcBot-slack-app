@@ -21,50 +21,54 @@ function handleTaskAssignment(req, res, db) {
   assignees.forEach(function(assignee) {
     let userName = userHandles[assignee.login]
     //finding to see if there is a document in the collection with the userName.
-    collection.find({ username: userName}).then((docFound) => {
-      if (docFound.length === 0) {
-        // Submit to the DB
-        collection.insert({
-          "username": userName,
-          "task": [
-            {
-              "taskURL": taskURL,
-              "taskNumber": taskNumber,
-              "repoName": repoName
+    if (userName) {
+      collection.find({ username: userName}).then((docFound) => {
+        if (docFound.length === 0) {
+          // Submit to the DB
+          collection.insert({
+            "username": userName,
+            "task": [
+              {
+                "taskURL": taskURL,
+                "taskNumber": taskNumber,
+                "repoName": repoName
+              }
+            ],
+            "timestamp": timestamp
+          }, (err, doc) => {
+            if (err) {
+              // If it failed, return error
+              console.log(err);
+            } else {
+              // sending slack notification
+              slackAlerts.taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
             }
-          ],
-          "timestamp": timestamp
-        }, (err, doc) => {
-          if (err) {
-            // If it failed, return error
-            console.log(err);
-          } else {
-            // sending slack notification
-            slackAlerts.taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
+          })
+        } else {
+          let newTask = {
+            taskURL: taskURL,
+            taskNumber: taskNumber,
+            repoName: repoName
           }
-        })
-      } else {
-        let newTask = {
-          taskURL: taskURL,
-          taskNumber: taskNumber,
-          repoName: repoName
+
+          docFound[0].task.push(newTask)
+
+          collection.update({
+            username: userName
+          }, {
+            $set: {
+              task: docFound[0].task,
+              timestamp: timestamp
+            }
+          }, (err, data) => {
+            if (err) console.log(err)
+          })
+          slackAlerts.taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
         }
-
-        docFound[0].task.push(newTask)
-
-        collection.update({
-          username: userName
-        }, {
-          $set: {
-            task: docFound[0].task,
-            timestamp: timestamp
-          }
-        }, (err, data) => {
-          if (err) console.log(err)
-        })
-        slackAlerts.taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
-      }
-    })
+      })
+    } else {
+      console.log("username is undefined")
+    }
   }, this);
 }
 /**
