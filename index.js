@@ -42,7 +42,6 @@ express()
     // set internal DB variable
     let db = req.db
     if(req.body.text) {
-      console.log(req.body.text)
       switch (req.body.text.toLowerCase()) {
         case "help":
           infoActions.showHelpInfo(res)
@@ -51,11 +50,10 @@ express()
           infoActions.greetings(res)
           break
         case "my prs":
-          infoActions.showAllPrs(req, res, db)
+          infoActions.showUserPrs(req, res, db)
           break
         case "all prs":
-          console.log("prs")
-          infoActions.showUserPrs(req, res, db)
+          infoActions.showAllPrs(req, res, db)
           break
         default:
           infoActions.showHelpInfo(res)
