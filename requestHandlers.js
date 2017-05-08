@@ -75,7 +75,24 @@ function handleTaskAssignment(req, res, db) {
           }
         })
       } else {
-        console.log(docFound)
+        let newTask = {
+          taskURL: taskURL,
+          taskNumber: taskNumber,
+          repoName: repoName
+        }
+
+        docFound.task.push(newTask)
+
+        collection.update({
+          username: userName
+        }, {
+          $set: {
+            task: docFound.task,
+            timestamp: timestamp
+          }
+        }, (err, data) => {
+          if (err) console.log(err)
+        })
       }
     })
   }, this);
