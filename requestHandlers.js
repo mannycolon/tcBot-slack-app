@@ -80,13 +80,14 @@ function handleTaskAssignment(req, res, db) {
           }
         })
       } else {
+        console.log(docFound.task)
         let newTask = {
           taskURL: taskURL,
           taskNumber: taskNumber,
           repoName: repoName
         }
 
-        docFound.task.push(newTask)
+        //docFound.task.push(newTask)
 
         collection.update({
           username: userName
