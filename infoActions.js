@@ -53,7 +53,7 @@ function showAllPrs(req, res, db) {
         })
       }, this);
     } else {
-      message = " No PR review assignment has been made."
+      message = " No PR review assignments have been made."
       color = "#cc3300"
     }
 
