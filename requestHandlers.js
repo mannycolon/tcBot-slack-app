@@ -123,10 +123,14 @@ function handleTaskRemoval(req, res, db) {
     let userName = userHandles[assignee.login];
     //finding to see if there is a document in the collection with the userName.
     collection.find({
-      "username": userName,
-      "task.taskURL": taskURL,
-      "task.taskNumber": taskNumber,
-      "task.repoName": repoName
+      username: userName,
+      "task": [
+        {
+          "taskURL": taskURL,
+          "taskNumber": taskNumber,
+          "repoName": repoName
+        }
+      ]
     }).then((docFound) => {
       console.log(docFound)
       if (docFound.length === 1) {
