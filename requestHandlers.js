@@ -53,7 +53,9 @@ function handleTaskAssignment(req, res, db) {
             fullRepoName: fullRepoName
           }
 
-          console.log(docFound[0].task.indexOf(newTask))
+          console.log(docFound[0].task.find(element => {
+            return element.taskURL == newTask.taskURL
+          }))
             docFound[0].task.push(newTask)
 
             collection.update({
