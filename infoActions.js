@@ -112,7 +112,7 @@ function showUserPrs(req, res, db) {
 
     let data = {
       response_type: 'ephemeral', // private message (only visible by user).
-      text: "Pull Request Assignments:",
+      text: "Your Pull Request Assignments:",
       attachments: [
         {
           text: message,
