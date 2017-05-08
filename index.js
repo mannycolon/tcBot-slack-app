@@ -46,6 +46,9 @@ express()
         case "help":
           infoActions.showHelpInfo(res)
           break
+        case "hello":
+          infoActions.greetings(res)
+          break
         case "my prs":
           infoActions.showAllPrs(req, res, db)
           break

@@ -14,6 +14,10 @@ function showHelpInfo(res) {
   res.json(data)
 }
 
+function greetings(res) {
+
+}
+
 function showAllPrs(req, res, db) {
 
 }
@@ -24,6 +28,7 @@ function showUserPrs(req, res, db) {
 
 module.exports = {
   showHelpInfo,
+  greetings,
   showAllPrs,
   showUserPrs
 }
