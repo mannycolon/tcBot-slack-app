@@ -106,11 +106,12 @@ function showUserPrs(req, res, db) {
         })
       }, this);
     } else {
-      message = " No PR review assignments have been made."
+      message = "You have no PR review assignments."
       color = "#cc3300"
     }
 
     let data = {
+      response_type: 'ephemeral', // private message (only visible by user).
       text: "Pull Request Assignments:",
       attachments: [
         {
