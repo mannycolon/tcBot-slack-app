@@ -54,7 +54,13 @@ function handleTaskAssignment(req, res, db) {
           }
 
           console.log(!docFound[0].task.includes(newTask))
-          if (!docFound[0].task.includes(newTask)) {
+          if (!docFound[0].task.includes(
+            {
+            taskURL: "https://github.com/translationCoreApps/translationWords_Check_plugin/pull/82",
+            taskNumber: 82,
+            repoName: "translationWords_Check_plugin",
+            fullRepoName: "translationCoreApps/translationWords_Check_plugin"
+          })) {
             docFound[0].task.push(newTask)
 
             collection.update({
