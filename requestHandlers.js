@@ -1,57 +1,5 @@
-const MY_SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/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';
-const slack = require('slack-notify')(MY_SLACK_WEBHOOK_URL);
 const userHandles = require('./userHandles')
-// request handler functions
-
-function taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName) {
-  slack.alert({
-    text: "Successful Pull Request Assignment:",
-    attachments: [
-      {
-        text: originator + " created a new *Pull Request.*",
-        mrkdwn_in: ["text", "pretext"],
-        color: "#36a64f",
-        title: repoName,
-        title_link: taskURL,
-        fields: [
-          {
-            title: "Assigned to",
-            value: userName,
-            short: true
-          },
-          {
-            title: "Pull Request Number",
-            value: "#" + taskNumber,
-            short: true
-          },
-          {
-            title: "Pull Request URL",
-            value: taskURL + "\n\n\n <https://reviewable.io/reviews/"
-                    + fullRepoName + "/" + taskNumber + "|Review Now>",
-            short: false
-          }
-        ]
-      }
-    ]
-  });
-}
-
-function taskUnassignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber) {
-  slack.alert({
-    text: "Successful Pull Request Unassignment:",
-    attachments: [
-      {
-        text: originator + " *merged or closed* pull request #" + taskNumber
-        + "\n" + userName + " was *unassigned* from PR #" + taskNumber,
-        mrkdwn_in: ["text", "pretext"],
-        color: "#439fe0",
-        title: repoName,
-        title_link: taskURL
-      }
-    ]
-  });
-}
-
+const slackAlerts = require('.slackAlerts')
 
 /**
  * @description
@@ -92,7 +40,7 @@ function handleTaskAssignment(req, res, db) {
             console.log(err);
           } else {
             // sending slack notification
-            taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
+            slackAlerts.taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
           }
         })
       } else {
@@ -114,7 +62,7 @@ function handleTaskAssignment(req, res, db) {
         }, (err, data) => {
           if (err) console.log(err)
         })
-        taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
+        slackAlerts.taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
       }
     })
   }, this);
@@ -168,7 +116,7 @@ function handleTaskRemoval(req, res, db) {
             console.log(err);
           } else {
             // sending slack notification
-            taskUnassignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber)
+            slackAlerts.taskUnassignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber)
           }
         })
       } else {
@@ -191,7 +139,7 @@ function handleTaskRemoval(req, res, db) {
           }
         }, (err, data) => {
           if (err) console.log(err)
-          taskUnassignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber)
+          slackAlerts.taskUnassignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber)
         })
       }
     })
@@ -206,40 +154,3 @@ module.exports = {
   handleTaskAssignment,
   handleTaskRemoval,
 }
-
-//opened / closed / reopened / first pr creation/open (req.body.action)
-    // req.body.action
-    // req.body.sender.login
-    // req.body.pull_request.number)
-    // req.body.pull_request.html_url
-    // req.body.pull_request.assignees (array)
-
-    // assigned / unassigned (req.body.action)
-    // pr requester
-    // req.body.sender.login
-    // reviewer assignee
-    // req.body.assignee.login
-    // req.body.pull_request.number
-    // req.body.pull_request.html_url
-    
-    //review_request_removed (req.body.action)
-    //review_requested (req.body.action)
-    // pr requester
-    // req.body.sender.login
-    //req.body.pull_request.number
-    //req.body.pull_request.html_url
-    //req.body.requested_reviewer.login
-
-    // merge and closed seem to be the same.
-
-    // note: when you first open a pr and dont assign it to anyone then
-    // req.body.action = opened
-    // and req.body.pull_request.assignees = []
-    /****
-     * however when you first open/create a pr and do asign it to someone
-     * then req.body.action = assigned and req.body.pull_request.assignees = ['userobject', 'userobject']
-     */
-
-
-    // pull_request.head.repo.name
-    //https://reviewable.io/reviews/translationcoreapps/translationhelps/30
