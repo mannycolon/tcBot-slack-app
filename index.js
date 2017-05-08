@@ -6,6 +6,7 @@ const monk = require('monk')
 const db = monk('mongodb://heroku_1rfb6cx7:csft257r52q2mqtq41fdpt2dg6@ds129641.mlab.com:29641/heroku_1rfb6cx7')
 // request handler functions
 const requestHandlers = require('./requestHandlers')
+const infoActions = require('./infoActions')
 
 express()
   .use(bodyParser.json()) // support json encoded bodies
@@ -21,7 +22,7 @@ express()
     // set internal DB variable
     let db = req.db
     res.status(200).send({ "Content-Type": "application/json" });
-    switch (req.body.action) {
+    switch (req.body.action.toLowerCase()) {
       case "opened":
       case "reopened":
       case "assigned":
@@ -30,6 +31,7 @@ express()
       case "unassigned":
       case "closed":
         requestHandlers.handleTaskRemoval(req, res, db)
+        break
       default:
         // Do nothing
         break
@@ -39,8 +41,26 @@ express()
   .post('/tcbot', function (req, res) {
     // set internal DB variable
     let db = req.db
-    res.status(200).send({ "Content-Type": "application/json" });
-    console.log(req.body)
+    if(query.text) {
+      switch (req.body.text.toLowerCase()) {
+        case "help":
+          infoActions.showHelpInfo(res)
+          break
+        case "my prs":
+          infoActions.showAllPrs(req, res, db)
+          break
+        case "all prs":
+          infoActions.showUserPrs(req, res, db)
+          break
+        default:
+          infoActions.showHelpInfo(res)
+          // Do nothing else
+          break
+      }
+    } else {
+      // no text string written after /tcbot command
+      infoActions.showHelpInfo(res)
+    }
   })
 
   .listen(process.env.PORT || 5000, () => {
