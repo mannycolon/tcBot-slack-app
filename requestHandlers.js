@@ -134,7 +134,7 @@ function handleTaskRemoval(req, res, db) {
       }
     }).then((docFound) => {
       console.log(docFound)
-      if (docFound.length === 1) {
+      if (docFound.task.length === 1) {
         // Submit to the DB
         collection.remove({
           username: userName
