@@ -32,30 +32,38 @@ function showAllPrs(req, res, db) {
   let collection = db.get('usercollection')
   collection.find().then((docsFound) => {
     let fields = []
+    let message = ""
+    let color = "#36a64f"
 
-    docsFound.forEach((element) => {
-      let userName = element.username
-      let tasks = ""
-      element.task.forEach((task, index) => {
-        let number = index + 1
-        tasks += "\n" + number + ". " + task.taskURL
-              + "  " + "<https://reviewable.io/reviews/"
-              + task.fullRepoName + "/" + task.taskNumber + "|Review Now>"
-      })
-      fields.push({
-        title: userName,
-        value: tasks,
-        short: false
-      })
-    }, this);
+    if (docsFound.length !== 0) {
+      docsFound.forEach((element) => {
+        let userName = element.username
+        let tasks = ""
+
+        element.task.forEach((task, index) => {
+          let number = index + 1
+          tasks += "\n" + number + ". " + task.taskURL
+                + "  " + "<https://reviewable.io/reviews/"
+                + task.fullRepoName + "/" + task.taskNumber + "|Review Now>"
+        })
+        fields.push({
+          title: userName,
+          value: tasks,
+          short: false
+        })
+      }, this);
+    } else {
+      message = " No PR review assignment has been made."
+      color = "#cc3300"
+    }
 
     let data = {
       text: "Pull Request Assignments:",
       attachments: [
         {
-          text: " text ",
+          text: message,
           mrkdwn_in: ["text", "pretext"],
-          color: "#36a64f",
+          color: color,
           fields: fields
         }
       ]
