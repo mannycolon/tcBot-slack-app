@@ -113,6 +113,7 @@ function handleTaskRemoval(req, res, db) {
   let originator = userHandles[req.body.sender.login]
   let taskURL = req.body.pull_request.html_url
   let taskNumber = req.body.pull_request.number
+  let timestamp = Date.now()
   let assignees = req.body.pull_request.assignees
   let repoName = req.body.pull_request.head.repo.name
   let fullRepoName = req.body.pull_request.head.repo.full_name // ex. translationCoreApps/translationHelps
