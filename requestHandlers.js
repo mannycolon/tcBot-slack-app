@@ -178,7 +178,7 @@ function handleTaskRemoval(req, res, db) {
           return task.taskURL !== taskRemoved.taskURL
         })
 
-        console.log(filteredTask)
+        console.log(filteredTasks)
 
         collection.update({
           username: userName
