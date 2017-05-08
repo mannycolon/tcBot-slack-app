@@ -192,6 +192,10 @@ function handleTaskRemoval(req, res, db) {
         })
       }
     })
+
+    .catch((err) => {
+      console.log(err);
+    });
   }, this);
 }
 
