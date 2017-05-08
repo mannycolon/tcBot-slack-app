@@ -92,7 +92,7 @@ function handleTaskAssignment(req, res, db) {
           username: userName
         }, {
           $set: {
-            task: docFound.task,
+            task: docFound[0].task,
             timestamp: timestamp
           }
         }, (err, data) => {
