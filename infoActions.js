@@ -42,8 +42,8 @@ function showAllPrs(req, res, db) {
 
         element.task.forEach((task, index) => {
           let number = index + 1
-          tasks += "\n" + number + ". <" + task.taskURL + "|" + task.repoName + " #" + task.taskNumber
-                + "  " + "<https://reviewable.io/reviews/"
+          tasks += "\n" + number + ". <" + task.taskURL + "|" + task.repoName
+                + " #" + task.taskNumber + ">" + "  " + "<https://reviewable.io/reviews/"
                 + task.fullRepoName + "/" + task.taskNumber + "|Review Now>"
         })
         fields.push({
