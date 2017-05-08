@@ -124,13 +124,13 @@ function handleTaskRemoval(req, res, db) {
     //finding to see if there is a document in the collection with the userName.
     collection.find({
       username: userName,
-      task: [
-        {
+      task: {
+        $elemMatch: {
           taskURL: taskURL,
           taskNumber: taskNumber,
           repoName: repoName
         }
-      ]
+      }
     }).then((docFound) => {
       console.log(docFound)
       if (docFound.length === 1) {
