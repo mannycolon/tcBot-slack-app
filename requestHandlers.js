@@ -31,7 +31,8 @@ function handleTaskAssignment(req, res, db) {
               {
                 "taskURL": taskURL,
                 "taskNumber": taskNumber,
-                "repoName": repoName
+                "repoName": repoName,
+                "fullRepoName": fullRepoName
               }
             ],
             "timestamp": timestamp
@@ -48,7 +49,8 @@ function handleTaskAssignment(req, res, db) {
           let newTask = {
             taskURL: taskURL,
             taskNumber: taskNumber,
-            repoName: repoName
+            repoName: repoName,
+            fullRepoName: fullRepoName
           }
 
           docFound[0].task.push(newTask)
@@ -98,7 +100,8 @@ function handleTaskRemoval(req, res, db) {
       {$elemMatch:{
           taskURL: taskURL,
           taskNumber: taskNumber,
-          repoName: repoName
+          repoName: repoName,
+          fullRepoName: fullRepoName
         }
       }
     }).then((docFound) => {
@@ -111,7 +114,8 @@ function handleTaskRemoval(req, res, db) {
           {$elemMatch:{
               taskURL: taskURL,
               taskNumber: taskNumber,
-              repoName: repoName
+              repoName: repoName,
+              fullRepoName: fullRepoName
             }
           }
         }, (err, doc) => {
@@ -127,7 +131,8 @@ function handleTaskRemoval(req, res, db) {
         let taskRemoved = {
           taskURL: taskURL,
           taskNumber: taskNumber,
-          repoName: repoName
+          repoName: repoName,
+          fullRepoName: fullRepoName
         }
 
         let filteredTasks = docFound[0].task.filter(task => {
