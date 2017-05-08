@@ -80,7 +80,7 @@ function handleTaskAssignment(req, res, db) {
           }
         })
       } else {
-        console.log(docFound.task)
+        console.log(docFound)
         let newTask = {
           taskURL: taskURL,
           taskNumber: taskNumber,
