@@ -31,7 +31,9 @@ function showAllPrs(req, res, db) {
   // Set collection
   console.log("hello")
   let collection = db.get('usercollection')
-  console.log(collection.find().toArray())
+  console.log(collection.find().then((docFound) => {
+    console.log(docFound)
+  }))
 }
 
 function showUserPrs(req, res, db) {
