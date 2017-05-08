@@ -30,6 +30,7 @@ function greetings(res) {
 function showAllPrs(req, res, db) {
   // Set collection
   let collection = db.get('usercollection')
+
   collection.find().then((docsFound) => {
     let fields = []
     let message = ""
@@ -79,7 +80,49 @@ function showAllPrs(req, res, db) {
 function showUserPrs(req, res, db) {
   // Set collection
   let collection = db.get('usercollection')
+  let userName = req.body
+  console.log(userName)
 
+  // collection.find({username: userName}).then((docsFound) => {
+  //   let fields = []
+  //   let message = ""
+  //   let color = "#36a64f"
+
+  //   if (docsFound.length !== 0) {
+  //     docsFound.forEach((element) => {
+  //       let userName = element.username
+  //       let tasks = ""
+
+  //       element.task.forEach((task, index) => {
+  //         let number = index + 1
+  //         tasks += "\n" + number + ". <" + task.taskURL + "|" + task.repoName
+  //               + " #" + task.taskNumber + ">" + "  " + "<https://reviewable.io/reviews/"
+  //               + task.fullRepoName + "/" + task.taskNumber + "|Review Now>"
+  //       })
+  //       fields.push({
+  //         title: userName,
+  //         value: tasks,
+  //         short: false
+  //       })
+  //     }, this);
+  //   } else {
+  //     message = " No PR review assignments have been made."
+  //     color = "#cc3300"
+  //   }
+
+  //   let data = {
+  //     text: "Pull Request Assignments:",
+  //     attachments: [
+  //       {
+  //         text: message,
+  //         mrkdwn_in: ["text", "pretext"],
+  //         color: color,
+  //         fields: fields
+  //       }
+  //     ]
+  //   }
+  //   res.json(data)
+  // })
 }
 
 module.exports = {
