@@ -55,7 +55,7 @@ function showAllPrs(req, res, db) {
         })
       }, this);
     } else {
-      message = "Hurrah!, no PR review assignment was found." + "\n" + "I guess more time for coding."
+      message = "Hurrah! No PR review assignment was found." + "\n" + "I guess more time to code."
       color = "#cc3300"
     }
 
