@@ -53,14 +53,7 @@ function handleTaskAssignment(req, res, db) {
             fullRepoName: fullRepoName
           }
 
-          console.log(!docFound[0].task.includes(newTask))
-          if (!docFound[0].task.includes(
-            {
-            taskURL: "https://github.com/translationCoreApps/translationWords_Check_plugin/pull/82",
-            taskNumber: 82,
-            repoName: "translationWords_Check_plugin",
-            fullRepoName: "translationCoreApps/translationWords_Check_plugin"
-          })) {
+          console.log(docFound[0].task.indexOf(newTask))
             docFound[0].task.push(newTask)
 
             collection.update({
@@ -75,7 +68,6 @@ function handleTaskAssignment(req, res, db) {
               slackAlerts.taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
             })
           }
-        }
       })
     } else {
       console.log("username is undefined")
