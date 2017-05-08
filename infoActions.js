@@ -60,6 +60,7 @@ function showAllPrs(req, res, db) {
     }
 
     let data = {
+      response_type: 'in_channel', // public
       text: "Pull Request Assignments:",
       attachments: [
         {
