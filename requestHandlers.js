@@ -3,6 +3,40 @@ const slack = require('slack-notify')(MY_SLACK_WEBHOOK_URL);
 const userHandles = require('./userHandles')
 // request handler functions
 
+function sendSlackNotification(originator, userName, repoName, taskURL, taskNumber, fullRepoName) {
+  slack.alert({
+    text: "Successful Pull Request Assignment:",
+    attachments: [
+      {
+        text: originator + " created a new *Pull Request.*",
+        mrkdwn_in: ["text", "pretext"],
+        color: "#36a64f",
+        title: repoName,
+        title_link: taskURL,
+        fields: [
+          {
+            title: "Assigned to",
+            value: userName,
+            short: true
+          },
+          {
+            title: "Pull Request Number",
+            value: "#" + taskNumber,
+            short: true
+          },
+          {
+            title: "Pull Request URL",
+            value: taskURL + "\n\n\n <https://reviewable.io/reviews/"
+                    + fullRepoName + "/" + taskNumber + "|Review Now>",
+            short: false
+          }
+        ]
+      }
+    ]
+  });
+}
+
+
 /**
  * @description
  * @param {object} req - request object.
@@ -42,36 +76,7 @@ function handleTaskAssignment(req, res, db) {
             console.log(err);
           } else {
             // sending slack notification
-            slack.alert({
-              text: "Successful Pull Request Assignment:",
-              attachments: [
-                {
-                  text: originator + " created a new *Pull Request.*",
-                  mrkdwn_in: ["text", "pretext"],
-                  color: "#36a64f",
-                  title: repoName,
-                  title_link: taskURL,
-                  fields: [
-                    {
-                      title: "Assigned to",
-                      value: userName,
-                      short: true
-                    },
-                    {
-                      title: "Pull Request Number",
-                      value: "#" + taskNumber,
-                      short: true
-                    },
-                    {
-                      title: "Pull Request URL",
-                      value: taskURL + "\n\n\n <https://reviewable.io/reviews/"
-                             + fullRepoName + "/" + taskNumber + "|Review Now>",
-                      short: false
-                    }
-                  ]
-                }
-              ]
-            });
+            sendSlackNotification(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
           }
         })
       } else {
@@ -93,6 +98,7 @@ function handleTaskAssignment(req, res, db) {
         }, (err, data) => {
           if (err) console.log(err)
         })
+        sendSlackNotification(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
       }
     })
   }, this);
