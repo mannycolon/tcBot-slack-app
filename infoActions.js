@@ -39,6 +39,8 @@ function showAllPrs(req, res, db) {
       element.task.forEach((task, index) => {
         let number = index + 1
         tasks += "\n" + number + ". " + task.taskURL
+              + "  " + "<https://reviewable.io/reviews/"
+              + task.fullRepoName + "/" + task.taskNumber + "|Review Now>"
       })
       fields.push({
         title: userName,
@@ -46,6 +48,7 @@ function showAllPrs(req, res, db) {
         short: false
       })
     }, this);
+
     let data = {
       text: "Pull Request Assignments:",
       attachments: [
