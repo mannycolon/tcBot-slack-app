@@ -122,7 +122,16 @@ function handleTaskRemoval(req, res, db) {
   assignees.forEach(function(assignee) {
     let userName = userHandles[assignee.login];
     //finding to see if there is a document in the collection with the userName.
-    collection.find({ username: userName}).then((docFound) => {
+    collection.find({
+      username: userName,
+      task: [
+        {
+          taskURL: taskURL,
+          taskNumber: taskNumber,
+          repoName: repoName
+        }
+      ]
+    }).then((docFound) => {
       if (docFound) {
         // Submit to the DB
         collection.remove({
@@ -144,7 +153,7 @@ function handleTaskRemoval(req, res, db) {
               text: "Successful Pull Request Unassignment:",
               attachments: [
                 {
-                  text: originator + " *merged* pull request #" + taskNumber
+                  text: originator + " *merged or closed* pull request #" + taskNumber
                   + "\n" + userName + " was *unassigned* from PR #" + taskNumber,
                   mrkdwn_in: ["text", "pretext"],
                   color: "#439fe0",
