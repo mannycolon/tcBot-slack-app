@@ -29,6 +29,7 @@ function greetings(res) {
 
 function showAllPrs(req, res, db) {
   // Set collection
+  console.log("hello")
   let collection = db.get('usercollection')
   console.log(collection)
 }
