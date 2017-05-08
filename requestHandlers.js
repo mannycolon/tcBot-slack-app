@@ -137,14 +137,15 @@ function handleTaskRemoval(req, res, db) {
       if (docFound.length === 1) {
         // Submit to the DB
         collection.remove({
-          username: userName,
-          task: [
-            {
+          username: userName
+        },
+        {task:
+          {$elemMatch:{
               taskURL: taskURL,
               taskNumber: taskNumber,
               repoName: repoName
             }
-          ],
+          }
         }, (err, doc) => {
           if (err) {
             // If it failed, return error
