@@ -53,9 +53,10 @@ function handleTaskAssignment(req, res, db) {
             fullRepoName: fullRepoName
           }
 
-          console.log(docFound[0].task.find(element => {
+          let foundDup = docFound[0].task.find(element => {
             return element.taskURL == newTask.taskURL
-          }))
+          })
+          if (!foundDup) {
             docFound[0].task.push(newTask)
 
             collection.update({
@@ -70,6 +71,7 @@ function handleTaskAssignment(req, res, db) {
               slackAlerts.taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
             })
           }
+        }
       })
     } else {
       console.log("username is undefined")
