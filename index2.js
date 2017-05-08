@@ -60,7 +60,7 @@ express()
           } else {
             // set up response message
             let data = {
-              response_type: 'in_channel', // private message (only visible by user).
+              response_type: 'in_channel',
               text: 'Successful pull request assigntment:',
               attachments:[
                 {
