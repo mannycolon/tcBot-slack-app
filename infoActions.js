@@ -36,8 +36,9 @@ function showAllPrs(req, res, db) {
     docsFound.forEach((element) => {
       let userName = element.username
       let tasks = ""
-      element.task.forEach((task) => {
-        tasks += "\n" + task.taskURL
+      element.task.forEach((task, index) => {
+        let number = index + 1
+        tasks += "\n" + number + ". " + task.taskURL
       })
       fields.push({
         title: userName,
