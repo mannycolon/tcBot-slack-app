@@ -107,7 +107,7 @@ function showUserPrs(req, res, db) {
         })
       }, this);
     } else {
-      message = "You have no PR review assignments."
+      message = "Hurrah! You have no PR review assignments."
       color = "#cc3300"
     }
 
