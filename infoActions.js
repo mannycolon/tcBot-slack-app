@@ -5,7 +5,7 @@ function showHelpInfo(res) {
     text: 'How to use the /tcbot command:',
     attachments:[
       {
-        text: "To get the PRs assigned to you, use `/tcbot my prs`.\nTo get all PRs assigments, use `/tcbot all prs`.\n You’ve already learned how to get help with `/tcbot help`.",
+        text: "To get the PRs assigned to you, use `/tcbot my prs`.\nTo get all PRs assigments, use `/tcbot all prs`.\n To say hello to tcBot, use `/tcbot hello`.\n You’ve already learned how to get help with `/tcbot help`.",
         mrkdwn_in: ["text", "pretext"],
         color: "#c3105a"
       }
@@ -17,7 +17,7 @@ function showHelpInfo(res) {
 function greetings(res) {
   let data = {
     response_type: 'in_channel', // public to the channel
-    text: "Hello team, How are you? \n My name is *tcBot* and I'm here to help.\n `FUN FACT:` According to my frined captcha I am a human.",
+    text: "Hello team, How are you today? \n My name is *tcBot* and I'm here to help.\n `FUN FACT:`\n According to my friend captcha I am a human.",
     attachments: [
       {
         image_url: 'https://media.giphy.com/media/QN8TP7wz2TroY/giphy.gif'
