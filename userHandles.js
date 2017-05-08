@@ -1,6 +1,6 @@
 module.exports = {
   mannycolon: '@mannycolon',
-  royalsix: '@royalsix',
+  RoyalSix: '@royalsix',
   cdwhitfield73: '@cdwhitfield73',
   ihoegen: '@ihoegen',
   klappy: '@klappy',
