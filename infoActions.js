@@ -31,7 +31,7 @@ function showAllPrs(req, res, db) {
   // Set collection
   console.log("hello")
   let collection = db.get('usercollection')
-  console.log(collection)
+  console.log(collection.find())
 }
 
 function showUserPrs(req, res, db) {
