@@ -21,7 +21,6 @@ function showUserPrs(req, res, db) {
 }
 
 module.exports = {
-  showWrongCommandMsg,
   showHelpInfo,
   showAllPrs,
   showUserPrs
