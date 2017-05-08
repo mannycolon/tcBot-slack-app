@@ -28,10 +28,14 @@ function greetings(res) {
 }
 
 function showAllPrs(req, res, db) {
-
+  // Set collection
+  let collection = db.get('usercollection')
+  console.log(collection)
 }
 
 function showUserPrs(req, res, db) {
+  // Set collection
+  let collection = db.get('usercollection')
 
 }
 
