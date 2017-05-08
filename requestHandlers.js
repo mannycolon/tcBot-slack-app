@@ -1,5 +1,5 @@
 const userHandles = require('./userHandles')
-const slackAlerts = require('.slackAlerts')
+const slackAlerts = require('./slackAlerts')
 
 /**
  * @description
