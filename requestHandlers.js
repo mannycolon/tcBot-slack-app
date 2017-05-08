@@ -3,7 +3,7 @@ const slack = require('slack-notify')(MY_SLACK_WEBHOOK_URL);
 const userHandles = require('./userHandles')
 // request handler functions
 
-function sendSlackNotification(originator, userName, repoName, taskURL, taskNumber, fullRepoName) {
+function taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName) {
   slack.alert({
     text: "Successful Pull Request Assignment:",
     attachments: [
@@ -31,6 +31,22 @@ function sendSlackNotification(originator, userName, repoName, taskURL, taskNumb
             short: false
           }
         ]
+      }
+    ]
+  });
+}
+
+function taskUnassignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber) {
+  slack.alert({
+    text: "Successful Pull Request Unassignment:",
+    attachments: [
+      {
+        text: originator + " *merged or closed* pull request #" + taskNumber
+        + "\n" + userName + " was *unassigned* from PR #" + taskNumber,
+        mrkdwn_in: ["text", "pretext"],
+        color: "#439fe0",
+        title: repoName,
+        title_link: taskURL
       }
     ]
   });
@@ -76,7 +92,7 @@ function handleTaskAssignment(req, res, db) {
             console.log(err);
           } else {
             // sending slack notification
-            sendSlackNotification(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
+            taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
           }
         })
       } else {
@@ -98,7 +114,7 @@ function handleTaskAssignment(req, res, db) {
         }, (err, data) => {
           if (err) console.log(err)
         })
-        sendSlackNotification(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
+        taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
       }
     })
   }, this);
@@ -152,23 +168,10 @@ function handleTaskRemoval(req, res, db) {
             console.log(err);
           } else {
             // sending slack notification
-            slack.alert({
-              text: "Successful Pull Request Unassignment:",
-              attachments: [
-                {
-                  text: originator + " *merged or closed* pull request #" + taskNumber
-                  + "\n" + userName + " was *unassigned* from PR #" + taskNumber,
-                  mrkdwn_in: ["text", "pretext"],
-                  color: "#439fe0",
-                  title: repoName,
-                  title_link: taskURL
-                }
-              ]
-            });
+            taskUnassignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber)
           }
         })
       } else {
-        console.log("removal function: UPDATE")
         let taskRemoved = {
           taskURL: taskURL,
           taskNumber: taskNumber,
@@ -179,8 +182,6 @@ function handleTaskRemoval(req, res, db) {
           return task.taskURL !== taskRemoved.taskURL
         })
 
-        console.log(filteredTasks)
-
         collection.update({
           username: userName
         }, {
@@ -190,6 +191,7 @@ function handleTaskRemoval(req, res, db) {
           }
         }, (err, data) => {
           if (err) console.log(err)
+          taskUnassignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber)
         })
       }
     })
