@@ -36,6 +36,13 @@ express()
     }
   })
 
+  .post('/tcbot', function (req, res) {
+    // set internal DB variable
+    let db = req.db
+    res.status(200).send({ "Content-Type": "application/json" });
+    console.log(req.body)
+  })
+
   .listen(process.env.PORT || 5000, () => {
     console.log('Expresss server listening on port ' + process.env.PORT || 5000)
   });
