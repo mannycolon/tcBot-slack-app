@@ -22,19 +22,21 @@ express()
     // set internal DB variable
     let db = req.db
     res.status(200).send({ "Content-Type": "application/json" });
-    switch (req.body.action.toLowerCase()) {
-      case "opened":
-      case "reopened":
-      case "assigned":
-        requestHandlers.handleTaskAssignment(req, res, db)
-        break
-      case "unassigned":
-      case "closed":
-        requestHandlers.handleTaskRemoval(req, res, db)
-        break
-      default:
-        // Do nothing
-        break
+    if (req.body.action) {
+      switch (req.body.action.toLowerCase()) {
+        case "opened":
+        case "reopened":
+        case "assigned":
+          requestHandlers.handleTaskAssignment(req, res, db)
+          break
+        case "unassigned":
+        case "closed":
+          requestHandlers.handleTaskRemoval(req, res, db)
+          break
+        default:
+          // Do nothing
+          break
+      }
     }
   })
 
