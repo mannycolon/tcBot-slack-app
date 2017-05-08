@@ -133,7 +133,6 @@ function handleTaskRemoval(req, res, db) {
         }
       }
     }).then((docFound) => {
-      console.log(docFound[0].task.length)
       if (docFound[0].task.length === 1) {
         // Submit to the DB
         collection.remove({
@@ -168,7 +167,29 @@ function handleTaskRemoval(req, res, db) {
           }
         })
       } else {
-        console.log("No document collection was found in the database.")
+        console.log("removal function: UPDATE")
+        let taskRemoved = {
+          taskURL: taskURL,
+          taskNumber: taskNumber,
+          repoName: repoName
+        }
+
+        let filteredTasks = docFound[0].task.filter(task => {
+          return task.taskURL !== taskRemoved.taskURL
+        })
+
+        console.log(filteredTask)
+
+        collection.update({
+          username: userName
+        }, {
+          $set: {
+            task: filteredTasks,
+            timestamp: timestamp
+          }
+        }, (err, data) => {
+          if (err) console.log(err)
+        })
       }
     })
   }, this);
