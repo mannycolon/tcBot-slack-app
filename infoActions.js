@@ -17,7 +17,7 @@ function showHelpInfo(res) {
 function greetings(res) {
   let data = {
     response_type: 'in_channel', // public to the channel
-    text: "Hello team, How are you? \n My name is tcBot and I'm here to help.\n According to my frined catcha I am a human,",
+    text: "Hello team, How are you? \n My name is *tcBot* and I'm here to help.\n `FUN FACT:` According to my frined captcha I am a human.",
     attachments: [
       {
         image_url: 'https://media.giphy.com/media/QN8TP7wz2TroY/giphy.gif'
