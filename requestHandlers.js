@@ -132,6 +132,7 @@ function handleTaskRemoval(req, res, db) {
         }
       ]
     }).then((docFound) => {
+      console.log(docFound)
       if (docFound) {
         // Submit to the DB
         collection.remove({
