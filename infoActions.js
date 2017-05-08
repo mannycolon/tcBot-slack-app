@@ -29,12 +29,40 @@ function greetings(res) {
 
 function showAllPrs(req, res, db) {
   // Set collection
-  console.log("hello")
   let collection = db.get('usercollection')
-  collection.find().then((docFound) => {
-    console.log(docFound)
+  collection.find().then((docsFound) => {
+    let fields = []
+
+    docsFound.forEach((element) => {
+      let userName = element.username
+      let tasks = ""
+      task.forEach((task) => {
+        tasks += "\n" + task.taskURL
+      })
+      fields.push({
+        title: userName,
+        value: tasks,
+        short: false
+      })
+    }, this);
+    let data = {
+      text: "Pull Request Assignments:",
+      attachments: [
+        {
+          text: " text ",
+          mrkdwn_in: ["text", "pretext"],
+          color: "#36a64f",
+          fields: fields
+        }
+      ]
+    }
+    res.json(data)
   })
 }
+
+/**
+ * 
+ */
 
 function showUserPrs(req, res, db) {
   // Set collection
