@@ -53,19 +53,22 @@ function handleTaskAssignment(req, res, db) {
             fullRepoName: fullRepoName
           }
 
-          docFound[0].task.push(newTask)
+          console.log(!docFound[0].task.includes(newTask))
+          if (!docFound[0].task.includes(newTask)) {
+            docFound[0].task.push(newTask)
 
-          collection.update({
-            username: userName
-          }, {
-            $set: {
-              task: docFound[0].task,
-              timestamp: timestamp
-            }
-          }, (err, data) => {
-            if (err) console.log(err)
-          })
-          slackAlerts.taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
+            collection.update({
+              username: userName
+            }, {
+              $set: {
+                task: docFound[0].task,
+                timestamp: timestamp
+              }
+            }, (err, data) => {
+              if (err) console.log(err)
+              slackAlerts.taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
+            })
+          }
         }
       })
     } else {
