@@ -52,10 +52,11 @@ function handleTaskAssignment(req, res, db) {
             repoName: repoName,
             fullRepoName: fullRepoName
           }
-
+          // checking for duplicate task
           let foundDup = docFound[0].task.find(element => {
             return element.taskURL == newTask.taskURL
           })
+
           if (!foundDup) {
             docFound[0].task.push(newTask)
 
