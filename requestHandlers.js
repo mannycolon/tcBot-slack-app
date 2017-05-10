@@ -15,6 +15,7 @@ function handleTaskAssignment(req, res, db) {
   let assignees = req.body.pull_request.assignees
   let repoName = req.body.pull_request.head.repo.name
   let fullRepoName = req.body.pull_request.head.repo.full_name // ex. translationCoreApps/translationHelps
+  let action = req.body.action
   // Set collection
   let collection = db.get('usercollection')
 
@@ -42,7 +43,7 @@ function handleTaskAssignment(req, res, db) {
               console.log(err);
             } else {
               // sending slack notification
-              slackAlerts.taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName, req.body.action)
+              slackAlerts.taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName, action)
             }
           })
         } else {
@@ -69,7 +70,7 @@ function handleTaskAssignment(req, res, db) {
               }
             }, (err, data) => {
               if (err) console.log(err)
-              slackAlerts.taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
+              slackAlerts.taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName, action)
             })
           }
         }
