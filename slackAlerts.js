@@ -8,10 +8,10 @@ function taskAssignmentSlackAlert(originator, assigneeAdded, repoName, taskURL, 
       attachments: [
         {
           text: originator + " " + action + " *Pull Request* " + "<" + taskURL + "|" + "#"
-                + taskNumber + ">" + " to " + assigneeAdded + "\n<https://reviewable.io/reviews/"
+                + taskNumber + ">" + " to " + assigneeAdded + "\n\n<https://reviewable.io/reviews/"
                 + fullRepoName + "/" + taskNumber + "|Review Now>",
           mrkdwn_in: ["text", "pretext"],
-          color: "#439fe0",
+          color: "#36a64f",
           title: repoName,
           title_link: taskURL
         }
@@ -23,19 +23,12 @@ function taskAssignmentSlackAlert(originator, assigneeAdded, repoName, taskURL, 
       attachments: [
         {
           text: originator + " " + action + " *Pull Request* " + "<" + taskURL + "|" + "#"
-                + taskNumber + ">" + " and assigned it to " + assigneeAdded,
+                + taskNumber + ">" + " and assigned it to " + assigneeAdded
+                + "\n\n<https://reviewable.io/reviews/" + fullRepoName + "/" + taskNumber + "|Review Now>",
           mrkdwn_in: ["text", "pretext"],
-          color: "#439fe0",
+          color: "#36a64f",
           title: repoName,
-          title_link: taskURL,
-          fields: [
-            {
-              title: "Pull Request URL",
-              value: taskURL + "\n\n\n <https://reviewable.io/reviews/"
-                      + fullRepoName + "/" + taskNumber + "|Review Now>",
-              short: false
-            }
-          ]
+          title_link: taskURL
         }
       ]
     });
@@ -47,7 +40,7 @@ function taskUnassignmentSlackAlert(originator, assigneeRemoved, repoName, taskU
     text: "Successful Pull Request Unassignment:",
     attachments: [
       {
-        text: originator + " *unassigned* " + assigneeRemoved + " from *Pull Request* " + "<" + taskURL + "|" + "#" + taskNumber + ">",
+        text: originator + " unassigned " + assigneeRemoved + " from *Pull Request* " + "<" + taskURL + "|" + "#" + taskNumber + ">",
         mrkdwn_in: ["text", "pretext"],
         color: "#439fe0",
         title: repoName,
@@ -63,7 +56,7 @@ function taskClosedSlackAlert(originator, assigneeRemoved, repoName, taskURL, ta
     attachments: [
       {
         text: originator + " *merged or closed* pull request #" + taskNumber + "\n"
-        + assigneeRemoved + " was *unassigned* from #" + taskNumber + "\n" + taskURL,
+              + assigneeRemoved + " was *unassigned* from #" + taskNumber + "\n" + taskURL,
         mrkdwn_in: ["text", "pretext"],
         color: "#439fe0",
         title: repoName,
