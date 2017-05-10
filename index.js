@@ -32,6 +32,7 @@ express()
           break
         case "unassigned":
           requestHandlers.handleTaskUnassignment(req, res, db)
+          break
         case "closed":
           requestHandlers.handleTaskRemoval(req, res, db)
           break
