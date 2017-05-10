@@ -22,7 +22,7 @@ express()
     // set internal DB variable
     let db = req.db
     res.status(200).send({ "Content-Type": "application/json" });
-    console.log(req.body.action)
+
     if (req.body.action) {
       switch (req.body.action.toLowerCase()) {
         case "opened":
