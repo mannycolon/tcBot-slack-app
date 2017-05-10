@@ -42,7 +42,7 @@ function handleTaskAssignment(req, res, db) {
               console.log(err);
             } else {
               // sending slack notification
-              slackAlerts.taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
+              slackAlerts.taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName, req.body.action)
             }
           })
         } else {
