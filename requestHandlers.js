@@ -198,10 +198,11 @@ function handleTaskUnassignment(req, res, db) {
       }
     }).then((docFound) => {
       console.log(docFound[0].username)
+      console.log(docFound[0].task.length)
       if (docFound[0].task.length === 1) {
         // Submit to the DB
         collection.remove({
-          username: userName
+          username: docFound[0].username
         },
         {task:
           {$elemMatch:{
