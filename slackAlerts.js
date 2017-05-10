@@ -39,7 +39,7 @@ function taskUnassignmentSlackAlert(originator, assigneeRemoved, repoName, taskU
     text: "Successful Pull Request Unassignment:",
     attachments: [
       {
-        text: originator + " *unassigned* " + assigneeRemoved + " from #" + taskNumber + "\n" + taskURL,
+        text: originator + " *unassigned* " + assigneeRemoved + " from *Pull Request* " + "<" + taskURL + "|" + "#" + taskNumber + ">",
         mrkdwn_in: ["text", "pretext"],
         color: "#439fe0",
         title: repoName,
