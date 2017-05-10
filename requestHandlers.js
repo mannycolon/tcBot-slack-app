@@ -22,7 +22,12 @@ function handleTaskAssignment(req, res, db) {
     let userName = userHandles[assignee.login]
     //finding to see if there is a document in the collection with the userName.
     if (userName) {
-      collection.createIndex({username: userName}, {unique:true});
+
+      collection.indexExists(userName).then(function(indexExists){
+        if(!indexExists)
+            collection.createIndex({username: userName}, {unique:true});
+      }).then(function(result) {
+
       collection.find({ username: userName}).then((docFound) => {
         if (docFound.length === 0) {
           // Submit to the DB
@@ -74,6 +79,7 @@ function handleTaskAssignment(req, res, db) {
             })
           }
         }
+      })
       })
     } else {
       console.log("username is undefined")
