@@ -1,7 +1,7 @@
 const MY_SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/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';
 const slack = require('slack-notify')(MY_SLACK_WEBHOOK_URL);
 
-function taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName) {
+function taskAssignmentSlackAlert(originator, assigneeAdded, repoName, taskURL, taskNumber, fullRepoName) {
   slack.alert({
     text: "Successful Pull Request Assignment:",
     attachments: [
@@ -14,7 +14,7 @@ function taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskN
         fields: [
           {
             title: "Assigned to",
-            value: userName,
+            value: assigneeAdded,
             short: true
           },
           {
@@ -34,13 +34,28 @@ function taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskN
   });
 }
 
-function taskUnassignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber) {
+function taskUnassignmentSlackAlert(originator, assigneeRemoved, repoName, taskURL, taskNumber) {
+  slack.alert({
+    text: "Successful Pull Request Unassignment:",
+    attachments: [
+      {
+        text: originator + " *unassigned* " + assigneeRemoved + " from #" + taskNumber + "\n" + taskURL,
+        mrkdwn_in: ["text", "pretext"],
+        color: "#439fe0",
+        title: repoName,
+        title_link: taskURL
+      }
+    ]
+  });
+}
+
+function taskClosedSlackAlert(originator, assigneeRemoved, repoName, taskURL, taskNumber) {
   slack.alert({
     text: "Successful Pull Request Unassignment:",
     attachments: [
       {
         text: originator + " *merged or closed* pull request #" + taskNumber + "\n"
-        + userName + " was *unassigned* from #" + taskNumber + "\n" + taskURL,
+        + assigneeRemoved + " was *unassigned* from #" + taskNumber + "\n" + taskURL,
         mrkdwn_in: ["text", "pretext"],
         color: "#439fe0",
         title: repoName,
@@ -53,4 +68,5 @@ function taskUnassignmentSlackAlert(originator, userName, repoName, taskURL, tas
 module.exports = {
   taskAssignmentSlackAlert,
   taskUnassignmentSlackAlert,
+  taskClosedSlackAlert
 }

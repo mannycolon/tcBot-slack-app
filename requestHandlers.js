@@ -130,7 +130,7 @@ function handleTaskRemoval(req, res, db) {
             console.log(err);
           } else {
             // sending slack notification
-            slackAlerts.taskUnassignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber)
+            slackAlerts.taskClosedSlackAlert(originator, userName, repoName, taskURL, taskNumber)
           }
         })
       } else {
@@ -154,7 +154,7 @@ function handleTaskRemoval(req, res, db) {
           }
         }, (err, data) => {
           if (err) console.log(err)
-          slackAlerts.taskUnassignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber)
+          slackAlerts.taskClosedSlackAlert(originator, userName, repoName, taskURL, taskNumber)
         })
       }
     })
@@ -197,7 +197,6 @@ function handleTaskUnassignment(req, res, db) {
         }
       }
     }).then((docFound) => {
-      console.log(docFound[0].username)
       if (docFound[0].task.length === 1) {
         // Submit to the DB
         collection.remove({
