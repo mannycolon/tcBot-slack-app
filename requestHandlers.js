@@ -22,7 +22,7 @@ function handleTaskAssignment(req, res, db) {
     let userName = userHandles[assignee.login]
     //finding to see if there is a document in the collection with the userName.
     if (userName) {
-      // collection.ensureIndex({username: 1}, {unique: true})
+      collection.ensureIndex({ username: 1 }, {unique: true})
       collection.createIndex( { username: 1 }, { unique: true } )
       collection.find({ username: userName}).then((docFound) => {
         if (docFound.length === 0) {
