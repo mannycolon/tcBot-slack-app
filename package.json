@@ -1,7 +1,7 @@
 {
   "name": "task-scheduler",
   "version": "1.0.0",
-  "description": "Slack app that connects both github Pull Review assignments and a slack team though webhooks.",
+  "description": "Slack app that connects both github Pull Review assignments and a slack team using multiple webhooks.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -15,5 +15,14 @@
     "mongoose": "^4.9.7",
     "monk": "^4.0.0",
     "slack-notify": "^0.1.6"
-  }
+  },
+    "repository": {
+    "type": "git",
+    "url": "https://github.com/mannycolon/tcBot-slack-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mannycolon/tcBot-slack-app/issues",
+    "email": "colonmanuel7@gmail.com"
+  },
+  "homepage": "https://github.com/mannycolon/tcBot-slack-app#readme"
 }
