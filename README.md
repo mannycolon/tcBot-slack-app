@@ -1,2 +1,2 @@
 # tcBot-slack-app
-Slack app that connects both github Pull Review assignments and a slack team using multiple webhooks.
+Slack app that uses webhooks  to connect a github repo Pull Review assignments and a slack team.
