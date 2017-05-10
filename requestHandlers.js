@@ -25,6 +25,7 @@ function handleTaskAssignment(req, res, db) {
       collection.find({ username: userName}).then((docFound) => {
         if (docFound.length === 0) {
           // Submit to the DB
+          db.users.createIndex({username: userName}, {unique:true});
           collection.insert({
             "username": userName,
             "task": [
