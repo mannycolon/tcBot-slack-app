@@ -96,6 +96,7 @@ function handleTaskRemoval(req, res, db) {
   // Set collection
   let collection = db.get('usercollection')
 
+  console.log(assignees)
   assignees.forEach(function(assignee) {
     let userName = userHandles[assignee.login];
     //finding to see if there is a document in the collection with the userName.
