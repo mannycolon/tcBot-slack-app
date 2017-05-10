@@ -45,7 +45,6 @@ function handleTaskAssignment(req, res, db) {
               slackAlerts.taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
             }
           })
-          //collection.ensureIndex({ username: 1 }, {unique: true, dropDups: true})
         } else {
           let newTask = {
             taskURL: taskURL,
