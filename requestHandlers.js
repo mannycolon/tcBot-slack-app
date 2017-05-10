@@ -25,6 +25,7 @@ function handleTaskAssignment(req, res, db) {
     if (userName) {
       collection.find({ username: userName}).then((docFound) => {
         if (docFound.length === 0) {
+          console.log(userName)
           // Submit to the DB
           collection.insert({
             "username": userName,
