@@ -221,29 +221,6 @@ function handleTaskUnassignment(req, res, db) {
             slackAlerts.taskUnassignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber)
           }
         })
-      } else {
-        let taskRemoved = {
-          taskURL: taskURL,
-          taskNumber: taskNumber,
-          repoName: repoName,
-          fullRepoName: fullRepoName
-        }
-
-        let filteredTasks = docFound[0].task.filter(task => {
-          return task.taskURL !== taskRemoved.taskURL
-        })
-
-        collection.update({
-          username: userName
-        }, {
-          $set: {
-            task: filteredTasks,
-            timestamp: timestamp
-          }
-        }, (err, data) => {
-          if (err) console.log(err)
-          slackAlerts.taskUnassignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber)
-        })
       }
     })
 
