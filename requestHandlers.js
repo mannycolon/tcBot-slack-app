@@ -22,8 +22,6 @@ function handleTaskAssignment(req, res, db) {
     let userName = userHandles[assignee.login]
     //finding to see if there is a document in the collection with the userName.
     if (userName) {
-      collection.ensureIndex({ username: 1 }, {unique: true})
-      collection.createIndex( { username: 1 }, { unique: true } )
       collection.find({ username: userName}).then((docFound) => {
         if (docFound.length === 0) {
           // Submit to the DB
@@ -47,6 +45,7 @@ function handleTaskAssignment(req, res, db) {
               slackAlerts.taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName)
             }
           })
+          collection.ensureIndex({ username: 1 }, {unique: true, dropDups: true})
         } else {
           let newTask = {
             taskURL: taskURL,
