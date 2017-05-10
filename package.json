@@ -1,7 +1,7 @@
 {
   "name": "task-scheduler",
   "version": "1.0.0",
-  "description": "Slack app that uses webhooks  to connect a github repo Pull Review assignments and a slack team.",
+  "description": "Slack app that uses webhooks to connect a github repo Pull Review assignments and a slack team.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
