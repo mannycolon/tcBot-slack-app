@@ -181,9 +181,9 @@ function handleTaskUnassignment(req, res, db) {
   let fullRepoName = req.body.pull_request.head.repo.full_name // ex. translationCoreApps/translationHelps
   // Set collection
   let collection = db.get('usercollection')
+  let assigneeToRemove = req.body.pull_request.assignee.login;
 
-  assignees.forEach(function(assignee) {
-    let userName = userHandles[assignee.login];
+    let userName = userHandles[assigneeToRemove];
     //finding to see if there is a document in the collection with the userName.
     collection.find({
       username: userName
@@ -249,7 +249,7 @@ function handleTaskUnassignment(req, res, db) {
     .catch((err) => {
       console.log(err);
     });
-  }, this);
+
 }
 
 module.exports = {
