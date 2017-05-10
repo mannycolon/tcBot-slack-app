@@ -184,6 +184,7 @@ function handleTaskUnassignment(req, res, db) {
   let assigneeToRemove = req.body.assignee.login;
 
     let userName = userHandles[assigneeToRemove];
+    console.log(userName)
     //finding to see if there is a document in the collection with the userName.
     collection.find({
       username: userName
@@ -197,21 +198,13 @@ function handleTaskUnassignment(req, res, db) {
         }
       }
     }).then((docFound) => {
+      console.log(docFound)
       console.log(docFound[0].username)
       console.log(docFound[0].task.length)
       if (docFound[0].task.length === 1) {
         // Submit to the DB
         collection.remove({
           username: docFound[0].username
-        },
-        {task:
-          {$elemMatch:{
-              taskURL: taskURL,
-              taskNumber: taskNumber,
-              repoName: repoName,
-              fullRepoName: fullRepoName
-            }
-          }
         }, (err, doc) => {
           if (err) {
             // If it failed, return error
