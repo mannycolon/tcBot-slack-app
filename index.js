@@ -43,6 +43,7 @@ express()
   .post('/tcbot', function (req, res) {
     // set internal DB variable
     let db = req.db
+    console.log(req.body.text)
     if(req.body.text) {
       switch (req.body.text.toLowerCase()) {
         case "help":
