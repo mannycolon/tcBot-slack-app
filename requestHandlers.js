@@ -2,7 +2,7 @@ const userHandles = require('./userHandles')
 const slackAlerts = require('./slackAlerts')
 
 /**
- * @description
+ * @description Assigns a task/PR to an user.
  * @param {object} req - request object.
  * @param {object} res - response object.
  * @param {object} db - mongodb database access.
@@ -46,6 +46,7 @@ function handleTaskAssignment(req, res, db) {
               slackAlerts.taskAssignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber, fullRepoName, action)
             }
           })
+          collection.ensureIndex({ username: 1 }, {unique: true, dropDups: true})
         } else {
           let newTask = {
             taskURL: taskURL,
@@ -81,7 +82,8 @@ function handleTaskAssignment(req, res, db) {
   }, this);
 }
 /**
- * @description
+ * @description Removes/unassigns a task/PR from an user
+ * when a PR is either closed or merged.
  * @param {object} req - request object.
  * @param {object} res - response object.
  * @param {object} db - mongodb database access.
@@ -167,7 +169,7 @@ function handleTaskRemoval(req, res, db) {
 }
 
 /**
- * @description
+ * @description Removes/unassigns a task/PR from user.
  * @param {object} req - request object.
  * @param {object} res - response object.
  * @param {object} db - mongodb database access.
@@ -183,73 +185,72 @@ function handleTaskUnassignment(req, res, db) {
   // Set collection
   let collection = db.get('usercollection')
   let assigneeToRemove = req.body.assignee.login;
-
-    let userName = userHandles[assigneeToRemove];
-    //finding to see if there is a document in the collection with the userName.
-    collection.find({
-      username: userName
-    },
-    {task:
-      {$elemMatch:{
-          taskURL: taskURL,
-          taskNumber: taskNumber,
-          repoName: repoName,
-          fullRepoName: fullRepoName
-        }
+  let userName = userHandles[assigneeToRemove];
+    
+  //finding to see if there is a document in the collection with the userName.
+  collection.find({
+    username: userName
+  },
+  {task:
+    {$elemMatch:{
+        taskURL: taskURL,
+        taskNumber: taskNumber,
+        repoName: repoName,
+        fullRepoName: fullRepoName
       }
-    }).then((docFound) => {
-      if (docFound[0].task.length === 1) {
-        // Submit to the DB
-        collection.remove({
-          username: docFound[0].username
-        },
-        {task:
-          {$elemMatch:{
-              taskURL: taskURL,
-              taskNumber: taskNumber,
-              repoName: repoName,
-              fullRepoName: fullRepoName
-            }
+    }
+  }).then((docFound) => {
+    if (docFound[0].task.length === 1) {
+      // Submit to the DB
+      collection.remove({
+        username: docFound[0].username
+      },
+      {task:
+        {$elemMatch:{
+            taskURL: taskURL,
+            taskNumber: taskNumber,
+            repoName: repoName,
+            fullRepoName: fullRepoName
           }
-        }, (err, doc) => {
-          if (err) {
-            // If it failed, return error
-            console.log(err);
-          } else {
-            // sending slack notification
-            slackAlerts.taskUnassignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber)
-          }
-        })
-      } else {
-        let taskRemoved = {
-          taskURL: taskURL,
-          taskNumber: taskNumber,
-          repoName: repoName,
-          fullRepoName: fullRepoName
         }
-
-        let filteredTasks = docFound[0].task.filter(task => {
-          return task.taskURL !== taskRemoved.taskURL
-        })
-
-        collection.update({
-          username: userName
-        }, {
-          $set: {
-            task: filteredTasks,
-            timestamp: timestamp
-          }
-        }, (err, data) => {
-          if (err) console.log(err)
+      }, (err, doc) => {
+        if (err) {
+          // If it failed, return error
+          console.log(err);
+        } else {
+          // sending slack notification
           slackAlerts.taskUnassignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber)
-        })
+        }
+      })
+    } else {
+      let taskRemoved = {
+        taskURL: taskURL,
+        taskNumber: taskNumber,
+        repoName: repoName,
+        fullRepoName: fullRepoName
       }
-    })
 
-    .catch((err) => {
-      console.log(err);
-    });
+      let filteredTasks = docFound[0].task.filter(task => {
+        return task.taskURL !== taskRemoved.taskURL
+      })
 
+      collection.update({
+        username: userName
+      }, {
+        $set: {
+          task: filteredTasks,
+          timestamp: timestamp
+        }
+      }, (err, data) => {
+        if (err) console.log(err)
+        slackAlerts.taskUnassignmentSlackAlert(originator, userName, repoName, taskURL, taskNumber)
+      })
+    }
+  })
+
+  .catch((err) => {
+    console.log(err);
+  });
 }
 
 module.exports = {
