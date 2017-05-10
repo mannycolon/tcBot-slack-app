@@ -8,19 +8,12 @@ function taskAssignmentSlackAlert(originator, assigneeAdded, repoName, taskURL, 
       attachments: [
         {
           text: originator + " " + action + " *Pull Request* " + "<" + taskURL + "|" + "#"
-                + taskNumber + ">" + " " + " to " + assigneeAdded,
+                + taskNumber + ">" + " to " + assigneeAdded + "\n<https://reviewable.io/reviews/"
+                + fullRepoName + "/" + taskNumber + "|Review Now>",
           mrkdwn_in: ["text", "pretext"],
           color: "#439fe0",
           title: repoName,
-          title_link: taskURL,
-          fields: [
-            {
-              title: "Pull Request URL",
-              value: taskURL + "\n\n\n <https://reviewable.io/reviews/"
-                      + fullRepoName + "/" + taskNumber + "|Review Now>",
-              short: false
-            }
-          ]
+          title_link: taskURL
         }
       ]
     });
