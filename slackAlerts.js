@@ -1,4 +1,4 @@
-const MY_SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/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';
+const MY_SLACK_WEBHOOK_URL = process.env.MY_SLACK_WEBHOOK_URL;
 const slack = require('slack-notify')(MY_SLACK_WEBHOOK_URL);
 
 function taskAssignmentSlackAlert(originator, assigneeAdded, repoName, taskURL, taskNumber, fullRepoName, action) {

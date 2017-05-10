@@ -3,7 +3,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const monk = require('monk')
-const db = monk('mongodb://heroku_1rfb6cx7:csft257r52q2mqtq41fdpt2dg6@ds129641.mlab.com:29641/heroku_1rfb6cx7')
+const db = monk(process.env.MONGODB_URI)
 // request handler functions
 const requestHandlers = require('./requestHandlers')
 const infoActions = require('./infoActions')
