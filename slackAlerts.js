@@ -55,8 +55,9 @@ function taskClosedSlackAlert(originator, assigneeRemoved, repoName, taskURL, ta
     text: "Successful Pull Request Unassignment:",
     attachments: [
       {
-        text: originator + " *merged or closed* pull request #" + taskNumber + "\n"
-              + assigneeRemoved + " was *unassigned* from #" + taskNumber + "\n" + taskURL,
+        text: originator + " closed or merged *Pull Request* " + "<" + taskURL + "|" + "#"
+              + taskNumber + ">" + "\n" + assigneeRemoved + " was *unassigned* from "
+              + "<" + taskURL + "|" + "#" + taskNumber + ">",
         mrkdwn_in: ["text", "pretext"],
         color: "#439fe0",
         title: repoName,
