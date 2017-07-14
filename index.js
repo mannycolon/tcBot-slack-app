@@ -71,6 +71,14 @@ express()
     }
   })
 
+  .get('/alexa/:optionType', function (req, res) {
+    const { optionType } = req.params;
+    return res.status(200).json({
+      error: false,
+      message: 'Success'
+    });
+  })
+
   .listen(process.env.PORT || 5000, () => {
     console.log('Expresss server listening on port ' + process.env.PORT || 5000)
   });
