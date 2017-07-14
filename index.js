@@ -75,7 +75,7 @@ express()
     const { optionType } = req.params;
     return res.status(200).json({
       error: false,
-      message: 'Success' + optionType
+      message: 'API Testing succesful'
     });
   })
 
